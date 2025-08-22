@@ -1,9 +1,9 @@
 # KK 2nd Variable Notes
 
-studentCount = 29
-waterAmount = "1oz"
+student_count = 29
+water_amount = "1oz"
 name = "Bobby"
-#grade = 98
+grade = 98
 print(grade)
 
 grade = grade-10
