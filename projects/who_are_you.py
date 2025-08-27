@@ -15,7 +15,3 @@ while True:
     cont = input("\nWould you like to continue?:\n")
     if cont != "yes":
         break
-
-    cont = input("\nWould you like to continue?:\n")
-    if cont != "yes":
-        break
