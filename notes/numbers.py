@@ -29,7 +29,16 @@ patience_level = -5.0
 # math !!
 print(8/4+7-(8+2)%4**2)
 
+# change data types
+age = int(input("How old are you?:\n"))
+print("Wow that is old! A whopping", 525600*age, "minutes!")
 
+braincells = float(input("How many brain cells does your class have? (Example: .2)\n"))
+print("Are you sure it's not", braincells/2,"?")
+
+# rounding
+pi = 3.14159265358
+print(round(pi, 4))
 
 
 
