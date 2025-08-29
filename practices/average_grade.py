@@ -8,6 +8,7 @@ else:
     input("Wrong data type! Input a number:\n")
 
 converted_classes = int(class_number)
+input*class_number("Enter your grade for a class: ")
 
 
    
