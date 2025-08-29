@@ -26,13 +26,13 @@
 
 # avg grade 2.0
 
-period1 = int(input("What is your grade for your first class?: "))
-period2 = int(input("What is your grade for your second class?: "))
-period3 = int(input("What is your grade for your third class?: "))
-advisory = int(input("What is your grade for your advisory class?: "))
-period6 = int(input("What is your grade for your sixth class?: "))
-period7 = int(input("What is your grade for your seventh class?: "))
-period8 = int(input("What is your grade for your eighth class?: "))
+period1 = float(input("What is your grade for your first class?: "))
+period2 = float(input("What is your grade for your second class?: "))
+period3 = float(input("What is your grade for your third class?: "))
+advisory = float(input("What is your grade for your advisory class?: "))
+period6 = float(input("What is your grade for your sixth class?: "))
+period7 = float(input("What is your grade for your seventh class?: "))
+period8 = float(input("What is your grade for your eighth class?: "))
 
 average = ((period1+period2+period3+advisory+period6+period7+period8)/7)
 print("Your average grade is: ")
