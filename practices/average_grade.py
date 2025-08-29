@@ -18,7 +18,7 @@
 #                 else:
 #                     print("Input a number, silly.")
 
-#         average_grade = "a"
+#         average_grade = " "
 #         print(f"Your average grade is: {average_grade}")
 #         break
 #     else:
