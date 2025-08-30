@@ -22,9 +22,7 @@ while True: # repeats until user enters a number
         for grades in collected_grades:
             average_grade=average_grade+grades
         average_grade=average_grade/len(collected_grades)
-        print(average_grade)
-            
-        print(f"Your average grade is: {average_grade}")
+        print(f"\nYour average grade is: {average_grade}")
         break
     else:
         print("Wrong data type! Please input a number.")
