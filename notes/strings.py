@@ -23,7 +23,7 @@ best = '"The Return of the King" is the best book ever!'
 funny = "The dog jumped into the lake"
 # string length
 length = len(month)
-print(f"September has{length} letters!")
+print(f"September has {length} letters!")
 # escape characters
 print('\tWill said \ndon\'t die')
 # concatenation
