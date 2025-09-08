@@ -33,7 +33,7 @@ while True:
     if gpa == float(gpa):
         
         break
-    else: 
+    elif gpa != float:
         print("Nope, only numbers are allowed here.\n")
 
 # outputs
