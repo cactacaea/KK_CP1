@@ -1,6 +1,8 @@
 # KK 2nd Test File
 
-print("test\n")
-# !
-print("Practice sync and hw")
-print("I added this text on GitHub codespaces.")
+a="Hello"
+print(a[1:4])
+
+print(float(3))
+print('3.0')
+print(-3.5%2)
