@@ -3,7 +3,7 @@
 print("I added this on codespaces, where I can do homework!")
 print("New seats 09.17")
 
-a="Hello"
+a = "Hello"
 print(a[1:4])
 
 print(float(3))
