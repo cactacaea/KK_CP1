@@ -3,7 +3,7 @@
 start = '\033[1m'
 end = '\033[0m'
 
-story = "The crew earned a whole bunch of money on the last outing, but the captain didn't have time to divvy it all up before release everyone to port.\nHe gave each member of the crew $500 for the evening and then sat down with his first mate to properly divide the shares."
+story = "The crew earned a whole bunch of money on the last outing, but the captain didn't have time to divvy it all up before releasing everyone to port.\nHe gave each member of the crew $500 for the evening and then sat down with his first mate to properly divide the shares."
 # prints the story above for details
 print(story)
 # amount of money and crew
@@ -19,6 +19,6 @@ crew_money = divided_share-500 # subtract 500 from a divided share because crew 
 firstm_money = divided_share*3
 
 
-modded_story = (f"\nThe crew earned ${money:,} on the last outing, but the captain didn't have time to divvy it all up before release everyone to port.\nHe gave each member of the crew $500 for the evening and then sat down with his first mate to properly divide the shares.")
+modded_story = (f"\nThe crew earned ${money:,.2f} on the last outing, but the captain didn't have time to divvy it all up before releasing everyone to port.\nHe gave each member of the crew $500 for the evening and then sat down with his first mate to properly divide the shares.")
 print(modded_story)
-print(f"\n{start}These were the final calculations.{end}\nMoney Earned: {money:,}\n# of Crew Members: {crew_mems}\nCaptain earns: {captain_money:.2f}\nFirst mate earns: {firstm_money:.2f}\nCrew still requires: {crew_money:.2f}")
+print(f"\n{start}These were the final calculations.{end}\nMoney Earned: {money:,.2f}\n# of Crew Members: {crew_mems}\nEqual Share: {divided_share:,.2f}\nCaptain earns: {captain_money:,.2f}\nFirst mate earns: {firstm_money:,.2f}\nCrew still requires: {crew_money:,.2f}")
