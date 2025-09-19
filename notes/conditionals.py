@@ -39,6 +39,6 @@ else:
     print("That shouldn't be possible")
 print("Your turn is over")
 
-if monster_hp and monster_hp > 0:
+if monster_hp > 0:
     print("It's the monster's turn")
 else: print("The monster is dead")
