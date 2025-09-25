@@ -15,7 +15,7 @@ while True:
             elif grade > 100:
                 print("Wow, you worked hard for extra credit; you have an A+!")
             else:
-                print("You have an A")
+                print("You have an A.")
         elif grade >= 80 and grade < 90:
             print("You have a B")
         break
