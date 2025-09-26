@@ -24,6 +24,12 @@
 #         grade = int(grade)
 #         collected_grades.append(grade)
 
+# print("Welcome. Please type 'finish' to calculate your average.")
+# print("TIP: Enter a decimal. Can be rounded.\n")
+# while True:
+#     grade = input("Enter your grade percentage to convert to a letter:\n")
+#     collected_grades = []
+
 # what's my grade 2,0
 
 grade = float(input("What's your grade? HINT; enter a decimal:\n"))
