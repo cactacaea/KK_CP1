@@ -34,7 +34,7 @@ while True:
             shopping_list.remove(removed_item)
             print(f"Removed: {removed_item}")
         else:
-            print("Item isn't in shopping list")
+            print("Item isn't in your shopping list")
     elif choice == "exit":
         break
     else:
