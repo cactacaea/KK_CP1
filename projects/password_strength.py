@@ -4,19 +4,21 @@ import random
 import string
 # intro/greeting
 print("Greetings! Welcome to the program that checks your password strength")
-# strength score variable
-strength_score = 0
+
 # list of symbols/unique characters
 characters = ["!","&","*","@","$","%","~","#","?","(","+","_"]
-# 5 false variables for requirements
-length_requirement = False
-upper_requirement = False
-lower_requirement = False
-numbers_requirement = False
-symbol_requirement = False
+
 
 # loop until user enters a valid password
 while True:
+    # strength score variable
+    strength_score = 0
+    # 5 false variables for requirements
+    length_requirement = False
+    upper_requirement = False
+    lower_requirement = False
+    numbers_requirement = False
+    symbol_requirement = False
     # user input asking for a password with .strip()
     usr_password = input("\nPlease create a password:\n").strip()
     # password length determined
@@ -26,6 +28,7 @@ while True:
         length_requirement = True
         # increase strength score if it meets requirements
         strength_score += 1
+            
     # for loop checking user_input/password for uppercase letters using .isupper()
     for i in usr_password:
         if i.isupper():
@@ -33,6 +36,7 @@ while True:
             upper_requirement = True
         # increase strength score if it meets requirements
             strength_score += 1
+            break
     # for loop checking password for lowercase letters using .islower()
     for i in usr_password:
         if i.islower():
@@ -40,6 +44,7 @@ while True:
             lower_requirement = True
         # increase strength score if it meets requirements
             strength_score += 1
+            break
     # for loop checking password for numbers using .isdigit()
     for i in usr_password:
         if i.isdigit():
@@ -47,6 +52,7 @@ while True:
             numbers_requirement = True
         # increase strength score if it meets requirements
             strength_score += 1
+            break
     # for loop checking password for symbols/special chars using .punctuation()
     for i in usr_password:
         if i in string.punctuation:
@@ -54,6 +60,7 @@ while True:
             symbol_requirement = True
         # increase strength score if it meets requirements
             strength_score += 1
+            break
     # CONDITIONS
     # if strength is 5, display very strong password and end the code
     if strength_score == 5:
@@ -65,7 +72,7 @@ while True:
         # if len == False
         if length_requirement == False:
             # suggest adding 8-user_input more characters
-            print(f"Try adding {8-usr_password} more characters!")
+            print(f"Try adding {8-password_length} more characters!")
         # if upper == False
         elif upper_requirement == False:
             # suggest random letter change to capital
@@ -90,7 +97,7 @@ while True:
         # if len == False
         if length_requirement == False:
             # suggest adding 8-user_input more characters
-            print(f"Try adding {8-usr_password} more characters!")
+            print(f"Try adding {8-password_length} more characters!")
         # if upper == False
         elif upper_requirement == False:
             # suggest random letter change to capital
@@ -115,7 +122,7 @@ while True:
         # if len == False
         if length_requirement == False:
             # suggest adding 8-user_input more characters
-            print(f"Try adding {8-usr_password} more characters!")
+            print(f"Try adding {8-password_length} more characters!")
         # if upper == False
         elif upper_requirement == False:
             # suggest random letter change to capital
@@ -140,7 +147,7 @@ while True:
         # if len == False
         if length_requirement == False:
             # suggest adding 8-user_input more characters
-            print(f"Try adding {8-usr_password} more characters!")
+            print(f"Try adding {8-password_length} more characters!")
         # if upper == False
         elif upper_requirement == False:
             # suggest random letter change to capital
