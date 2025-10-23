@@ -33,6 +33,8 @@ print(f"results are: {add(220,848)}")
 total = add(8535394,9981)
 print(add(add(3.14,.85),10))
 add(42,7)
+print(total)
+print(add(42,7))
 
 print(f"Tia's initials are: {initials("Tia LaRose")}")
 print(f"Xavier's initials are : {initials("Xavier LaRose")}")
