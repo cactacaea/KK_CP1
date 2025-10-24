@@ -11,8 +11,12 @@ def encode(message, shift):
     ready_msg = ""
     for char in message:
     # modifying a character using chr and ord
-        encoded_char = chr(ord(char) + shift)
-        ready_msg += encoded_char
+        shifted_letter = ord(char) + shift
+        if shifted_letter > 90 and char.isupper():
+            shifted_letter -= 26
+        if char.islower() and shifted_letter > 122:
+            shifted_letter -= 26
+        ready_msg += chr(shifted_letter) 
     # increased string is converted back from numbers using chr
     return ready_msg
 
@@ -22,8 +26,12 @@ def decode(message, shift):
     ready_msg = ""
     for char in message:
     # modifying a character using chr and ord
-        shifted_msg = chr(ord(char) - shift)
-        ready_msg += shifted_msg
+        shifted_letter = ord(char) - shift
+        if shifted_letter < 65 and char.isupper():
+            shifted_letter += 26
+        if char.islower() and shifted_letter < 97:
+            shifted_letter += 26
+        ready_msg += chr(shifted_letter) 
     # decreased string is turned back using char
     return ready_msg
 

@@ -23,3 +23,12 @@ elif fclass == "2":
                     "defense": 28}
 elif fclass == "3":
     player_stats = {"name": username,}
+
+def player_turn(player_stats, monster_stats):
+    if player_stats["attack"] > monster_stats["defense"]:
+        print("")
+    return player_stats, monster_stats
+
+
+
+player_stats, monster_stats = player_turn(player_stats, monster_stats)
