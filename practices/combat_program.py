@@ -56,9 +56,12 @@ else:
     player_stats, monster_stats = player_turn(player_stats, monster_stats)
 
 while monster_stats["hp"] > 0:
+    # variable with conditional checking for turns
+
     if player_stats["hp"] <= 0:
         print("You were killed.")
         break
+
     combat_choice = input("\n1: Normal Attack\n2: Wild Attack (double damage, but you too, take damage)\n3: Healing Vial (regain 10 HP)\n4. Run for your life (50/50 chance of survival)\nChoose a way to go about your turn:\n")
 
 
