@@ -36,28 +36,31 @@ elif fclass == "3":
                     "defense": 15}
 print(f"\nYour Statistics:\nName: {player_stats["name"]}\nHealth: {player_stats["hp"]}\nAttack: {player_stats["attack"]}\nDamage: {player_stats["dmg"]}\nDefense: {player_stats["defense"]}")
 
-def player_turn(player_stats, monster_stats):
+def player_turn(player_stats, monster_stats, combat_choice):
     if player_stats["attack"] > monster_stats["defense"]:
         monster_stats["hp"] -= player_stats["attack"]
     return player_stats, monster_stats
 
-def monster_turn(player_stats, monster_stats):
+def monster_turn(player_stats, monster_stats, combat_choice):
     if monster_stats["attack"] > player_stats["defense"]:
         player_stats["hp"] -= monster_stats["attack"]
     return player_stats, monster_stats
 
-random_turn = random.choice(player_turn, monster_turn)
-
-
+random_turn = random.choice([player_turn, monster_turn])
 
 if random_turn == player_turn:
     print("\nIt's your turn to fight!")
-    player_turn(player_stats,monster_stats)
+    player_stats, monster_stats = player_turn(player_stats, monster_stats)
 else:
-    print("The Boreal Warden attacks first.")
-    monster_turn(player_stats,monster_stats)
+    print("\nThe Boreal Warden attacks first.")
+    player_stats, monster_stats = player_turn(player_stats, monster_stats)
 
-#while monster_stats["hp"] > 0:
-    
+while monster_stats["hp"] > 0:
+    if player_stats["hp"] <= 0:
+        print("You were killed.")
+        break
+    combat_choice = input("\n1: Normal Attack\n2: Wild Attack (double damage, but you too, take damage)\n3: Healing Vial (regain 10 HP)\n4. Run for your life (50/50 chance of survival)\nChoose a way to go about your turn:\n")
 
-player_stats, monster_stats = player_turn(player_stats, monster_stats)
+
+print("You defeated the Warden!")
+
