@@ -4,6 +4,10 @@ import random
 import turtle
 num = random.randint(100,500)
 
+screen = turtle.Screen()
+screen.setup(1000,1000)
+screen.title("Turtles")
+
 turtle.shape("turtle")
 turtle.color("#68C496")
 turtle.pensize(10)
