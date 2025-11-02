@@ -14,7 +14,7 @@ maurice = turtle.Turtle()
 albert = turtle.Turtle()
 # screen setup/pixels/title
 screen = turtle.Screen()
-screen.setup(2000,1100)
+screen.setup(1800,900)
 screen.title("Turtle Race")
 
 gary.shape('turtle')
@@ -24,7 +24,7 @@ maurice.shape("turtle")
 albert.shape("turtle")
 # raceSetup FUNCTION
 def raceSetup():
-    # draw a finish line after 0,0
+    # draw a finish line around x=700
     drawer = turtle.Turtle()
     drawer.speed(10)
     drawer.color("#292929")
@@ -81,31 +81,37 @@ def raceSetup():
     boris.speed(4)
     maurice.speed(4)
     albert.speed(4)
-# moveTurtle FUNCTION with parameters for each turtle
 
 raceSetup()
-# determine random integer number of steps
-random_step = random.randint(0,50)
 
 game = True
-# while true loop until a turtle reaches a coordinate for win "function"
+
+# while loop until a turtle reaches a coordinate for win "function"
 while game:
-    for step in range(850):
-        gary.forward(random_step)
-        if gary.xcor()>= 700:
-            print("Gary won")
+    for step in range(100):
+        
+        gary.forward(random.randint(0,50))
+        if gary.xcor() >= 700:
+            print("Gary (red turtle) won!")
             game = False
             break
-        tim.forward(random_step)
-        boris.forward(random_step)
-        maurice.forward(random_step)
-        albert.forward(random_step)
-
-    # points = [gary.position(), tim.position(), boris.position(), maurice.position(), albert.position()]
-    # wanted_x = 0
-    # for point in points:
-    #     if point[0] == wanted_x:
-    #         print("a turtle won")
-    #         break
-    # if gary.position() or tim.position() or boris.position() or maurice.position() or albert.position() == x_coor:
-    #     break
+        tim.forward(random.randint(0,50))
+        if tim.xcor() >= 700:
+            print("Tim (green turtle) won!")
+            game = False
+            break
+        boris.forward(random.randint(0,50))
+        if boris.xcor() >= 700:
+            print("Boris (orange turtle) won!")
+            game = False
+            break
+        maurice.forward(random.randint(0,50))
+        if maurice.xcor() >= 700:
+            print("Maurice (blue turtle) won!")
+            game = False
+            break
+        albert.forward(random.randint(0,50))
+        if albert.xcor() >= 700:
+            print("Albert (purple turtle) won!")
+            game = False
+            break
