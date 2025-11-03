@@ -3,44 +3,59 @@
 # turtle and random imports
 import turtle
 import random
+import time
 
-# nested list maze grid variable w/ 6 lists inside one list and 6 more lists inside each list
-grid = [[[],[],[],[],[],[]],
-        [[],[],[],[],[],[]],
-        [[],[],[],[],[],[]],
-        [[],[],[],[],[],[]],
-        [[],[],[],[],[],[]],
-        [[],[],[],[],[],[]]]
+# 2 nested list maze grid variable w/ 6 lists inside one list and 6 more lists inside each list
+column_grid = [[[],[],[],[],[],[]],
+               [[],[],[],[],[],[]],
+               [[],[],[],[],[],[]],
+               [[],[],[],[],[],[]],
+               [[],[],[],[],[],[]],
+               [[],[],[],[],[],[]]]
+
+row_grid = [[[],[],[],[],[],[]],
+            [[],[],[],[],[],[]],
+            [[],[],[],[],[],[]],
+            [[],[],[],[],[],[]],
+            [[],[],[],[],[],[]],
+            [[],[],[],[],[],[]]]
 
 # setup FUNCTION
 def setup():
     # screen title/setup
     window = turtle.Screen()
-    window.setup(600,600)
+    window.setup(1500,1500)
     window.title("Maze Generator")
     # turtle setups
-    turtle.pensize(8)
-    turtle.speed(8)
+    turtle.pensize(4)
+    turtle.speed(6)
     turtle.shape("turtle")
     turtle.penup()
-    turtle.goto(-200,200)
+    turtle.goto(-400,400)
     turtle.pendown()
     
-
-# maze wall drawing FUNCTION
+# maze wall drawing function(?)
 #def mazeWall():
-setup()
+
 # right vertical line
-turtle.left(90)
-# for loop iterating over each list in the maze list
-for list in grid:
+# for loop iterating over each list in the column grid list
+turtle.right(90)
+for list in column_grid:
     # nested for loop iterating over each first list in the previous lists
     for nested_list in list:
         turtle.forward(20)
 
 # left vertical line
+
+# turtle.penup()
+# turtle.goto(400,400)
+# turtle.pendown()
+
 # for loop iterating over each list in the maze list
+for list in column_grid:
     # nested for loop iterating over the last index of each previous list
+    for nested_list in list:
+        turtle.forward(20)
 
 # bottom line
 # for loop iterating over the last list in the first maze list
@@ -51,3 +66,5 @@ for list in grid:
     # nested for loop drawing a line to the right for every list
 
 # drawing/generating the actual maze FUNCTION
+
+setup()
