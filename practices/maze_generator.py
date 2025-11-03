@@ -19,21 +19,24 @@ def setup():
     window.setup(600,600)
     window.title("Maze Generator")
     # turtle setups
-    turtle.goto(200,200)
+    turtle.pensize(8)
     turtle.speed(8)
     turtle.shape("turtle")
-    turtle.pensize(8)
+    turtle.penup()
+    turtle.goto(-200,200)
+    turtle.pendown()
+    
 
 # maze wall drawing FUNCTION
 #def mazeWall():
-
+setup()
 # right vertical line
-    turtle.left(90)
+turtle.left(90)
 # for loop iterating over each list in the maze list
-    for list in grid:
+for list in grid:
     # nested for loop iterating over each first list in the previous lists
-        for nested_list in list[0]:
-            turtle.forward(20)
+    for nested_list in list:
+        turtle.forward(20)
 
 # left vertical line
 # for loop iterating over each list in the maze list
