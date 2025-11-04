@@ -8,23 +8,23 @@ import time
 # 2 nested list maze grid variable w/ 6 lists inside one list and 6 more lists inside each list
 column_grid = [[True,True,True,True,True,True],
                [True,True,True,True,True,True],
-               [[],[],[],[],[],[]],
-               [[],[],[],[],[],[]],
-               [[],[],[],[],[],[]],
-               [[],[],[],[],[],[]]]
+               [True,True,True,True,True,True],
+               [True,True,True,True,True,True],
+               [True,True,True,True,True,True],
+               [True,True,True,True,True,True]]
 
-row_grid = [[[],[],[],[],[],[]],
-            [[],[],[],[],[],[]],
-            [[],[],[],[],[],[]],
-            [[],[],[],[],[],[]],
-            [[],[],[],[],[],[]],
-            [[],[],[],[],[],[]]]
+row_grid = [[True,True,True,True,True,True],
+            [True,True,True,True,True,True],
+            [True,True,True,True,True,True],
+            [True,True,True,True,True,True],
+            [True,True,True,True,True,True],
+            [True,True,True,True,True,True]]
 
 # setup FUNCTION
 def setup():
     # screen title/setup
     window = turtle.Screen()
-    window.setup(1500,1500)
+    window.setup(900,900)
     window.title("Maze Generator")
     # turtle setups
     turtle.pensize(4)
@@ -38,7 +38,7 @@ def mazeWall():
     turtle.penup()
     turtle.goto(-360,360)
     turtle.pendown()
-    # draws 20 pixels for every slot in the grid
+    # 120 pixels for each slot in the grid
     turtle.forward(720)
     time.sleep(1)
     turtle.right(90)
