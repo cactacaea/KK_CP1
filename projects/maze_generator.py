@@ -6,15 +6,15 @@ import random
 import time
 
 # 2 nested list maze grid variable w/ 6 lists inside one list and 6 more lists inside each list
-column_grid = [[True,True,False,True,True,False],
+column_grid = [[True,False,False,True,True,False],
                [True,False,True,True,True,True],
+               [False,True,True,True,True,True],
                [True,True,True,True,True,True],
-               [True,True,True,True,True,True],
-               [True,True,True,True,True,True],
+               [False,True,True,True,True,True],
                [True,True,True,True,True,True]]
 
-row_grid = [[True,True,True,True,True,True],
-            [True,True,True,True,True,True],
+row_grid = [[True,False,True,False,True,True],
+            [False,True,True,True,True,True],
             [True,True,True,True,True,True],
             [True,True,True,True,True,True],
             [True,True,True,True,True,True],
@@ -33,22 +33,16 @@ def setup():
     
 # maze wall drawing FUNCTION
 def mazeWall():
-    # TOP LINE
+    
     # turtle starts in the 2nd quadrant
     turtle.penup()
     turtle.goto(-360,360)
     turtle.pendown()
-    # 120 pixels for each slot in the grid
-    turtle.forward(720)
-    time.sleep(.5)
-    turtle.right(90)
-    turtle.forward(720)
-    turtle.right(90)
-    turtle.forward(720)
-    time.sleep(.5)
-    turtle.right(90)
-    turtle.forward(720)
-    turtle
+    # 120 pixels for each slot in the grid, for LOOP to draw square/walls
+    for x in range(4):
+        turtle.forward(720)
+        turtle.right(90)
+
     # TURTLE STOPS WITH ITS PEN BACK UP AND TURNED DIRECTLY TO THE RIGHT
     turtle.penup()
     turtle.right(90)
@@ -64,6 +58,12 @@ def drawMaze():
             else:
                 turtle.penup()
                 turtle.forward(120)
+            if turtle.xcor() >= 360:
+                turtle.penup()
+                turtle.right(180)
+                turtle.forward(720)
+                turtle.left(180)
+                turtle.pendown()
     # for unit in row_grid:
     #     for value in unit:
     #         if value == True:
@@ -75,4 +75,12 @@ def drawMaze():
 
 setup()
 mazeWall()
-drawMaze()
+for unit in row_grid:
+    for value in unit:
+        if value == True:
+            turtle.pendown()
+            turtle.forward(120)
+            turtle.penup()
+        else:
+            turtle.penup()
+            turtle.forward(120)
