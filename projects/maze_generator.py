@@ -32,21 +32,8 @@ def setup():
     turtle.shape("turtle")
     
 # maze wall drawing FUNCTION
-def mazeWall():
+#def mazeWall():
     
-    # turtle starts in the 2nd quadrant
-    turtle.penup()
-    turtle.goto(-360,360)
-    turtle.pendown()
-    # 120 pixels for each slot in the grid, for LOOP to draw square/walls
-    for x in range(4):
-        turtle.forward(720)
-        turtle.right(90)
-
-    # TURTLE STOPS WITH ITS PEN BACK UP AND TURNED DIRECTLY TO THE RIGHT
-    turtle.penup()
-    turtle.right(90)
-
 # drawing/generating the actual maze FUNCTION
 def drawMaze():
     for unit in column_grid:
@@ -74,7 +61,15 @@ def drawMaze():
 
 
 setup()
-mazeWall()
+# turtle starts in the 2nd quadrant
+turtle.penup()
+turtle.goto(-360,360)
+turtle.pendown()
+# 120 pixels for each slot in the grid, for LOOP to draw square/walls
+for x in range(4):
+    turtle.forward(720)
+    turtle.right(90)
+
 for unit in row_grid:
     for value in unit:
         if value == True:
