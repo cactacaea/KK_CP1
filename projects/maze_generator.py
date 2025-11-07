@@ -23,7 +23,6 @@ row_grid = [[True,False,True,False,True,True],
 grid_size = 6
 columns = random.choice([True,False])
 rows = random.choice([True,False])
-# starting coords as varaibles, turtle goto those coordinates
 
 # setup FUNCTION
 def setup():
@@ -32,7 +31,7 @@ def setup():
     window.setup(1500,1500) # 900,900 / 1500,1500
     window.title("Maze Generator")
     # turtle setups
-    turtle.pensize(4)
+    turtle.pensize(2)
     turtle.speed(6)
     turtle.shape("turtle")
     
@@ -40,22 +39,17 @@ def setup():
 #def mazeWall():
     
 # drawing/generating the actual maze FUNCTION
-def drawMaze():
-    for unit in column_grid:
-        for value in unit:
-            if value == True:
-                turtle.pendown()
-                turtle.forward(120)
-                turtle.penup()
-            else:
-                turtle.penup()
-                turtle.forward(120)
-            if turtle.xcor() >= 360:
-                turtle.penup()
-                turtle.right(180)
-                turtle.forward(720)
-                turtle.left(180)
-                turtle.pendown()
+# def drawMaze():
+#     for unit in column_grid:
+#         for value in unit:
+#             if value == True:
+#                 turtle.pendown()
+#                 turtle.forward(120)
+#                 turtle.penup()
+#             else:
+#                 turtle.penup()
+#                 turtle.forward(120)
+        
     # for unit in row_grid:
     #     for value in unit:
     #         if value == True:
@@ -75,8 +69,35 @@ for x in range(4):
     turtle.forward(720)
     turtle.right(90)
 
+turtle.goto(-360,240)
 for unit in row_grid:
     for value in unit:
+        if value == True:
+            turtle.pendown()
+            turtle.forward(120)
+            turtle.penup()
+        else:
+            turtle.penup()
+            turtle.forward(120)
+
+turtle.goto(-240,360)
+turtle.right(90)
+for unit in column_grid:
+    for value in unit:
+        # if value in unit == [-1]:
+        #     turtle.penup()
+        #     if unit == 0:
+        #         turtle.goto(-360,240)
+        #     elif unit == 1:
+        #         turtle.goto(-360,120)
+        #     elif unit == 2:
+        #         turtle.goto(-360,0)
+        #     elif unit == 3:
+        #         turtle.goto(-360,-120)
+        #     elif unit == 4:
+        #         turtle.goto(-360,-240)
+        #     elif unit == 1:
+        #         turtle.goto(-360,-360)
         if value == True:
             turtle.pendown()
             turtle.forward(120)
