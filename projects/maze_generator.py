@@ -20,6 +20,11 @@ row_grid = [[True,False,True,False,True,True],
             [True,True,True,True,True,True],
             [True,True,True,True,True,True]]
 
+grid_size = 6
+columns = random.choice([True,False])
+rows = random.choice([True,False])
+# starting coords as varaibles, turtle goto those coordinates
+
 # setup FUNCTION
 def setup():
     # screen title/setup
