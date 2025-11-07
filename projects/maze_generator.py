@@ -6,23 +6,21 @@ import random
 import time
 
 # 2 nested list maze grid variable w/ 6 lists inside one list and 6 more lists inside each list
-column_grid = [[True,False,False,True,True,False],
-               [True,False,True,True,True,True],
-               [False,True,True,True,True,True],
-               [True,True,True,True,True,True],
-               [False,True,True,True,True,True],
-               [True,True,True,True,True,True]]
+column_grid = [[(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False]))],
+               [(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False]))],
+               [(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False]))],
+               [(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False]))],
+               [(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False]))],
+               [(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False]))]]
 
-row_grid = [[True,False,True,False,True,True],
-            [False,True,True,True,True,True],
-            [True,True,True,True,True,True],
-            [True,True,True,True,True,True],
-            [True,True,True,True,True,True],
-            [True,True,True,True,True,True]]
+row_grid = [[(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False]))],
+            [(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False]))],
+            [(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False]))],
+            [(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False]))],
+            [(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False]))],
+            [(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False])),(random.choice([True,False]))]]
 
-grid_size = 6
-columns = random.choice([True,False])
-rows = random.choice([True,False])
+
 
 # setup FUNCTION
 def setup():
@@ -39,25 +37,8 @@ def setup():
 #def mazeWall():
     
 # drawing/generating the actual maze FUNCTION
-# def drawMaze():
-#     for unit in column_grid:
-#         for value in unit:
-#             if value == True:
-#                 turtle.pendown()
-#                 turtle.forward(120)
-#                 turtle.penup()
-#             else:
-#                 turtle.penup()
-#                 turtle.forward(120)
-        
-    # for unit in row_grid:
-    #     for value in unit:
-    #         if value == True:
-    #             turtle.pendown()
-    #             turtle.forward(120)
 
 # check for solvable maze FUNCTION
-
 
 setup()
 # turtle starts in the 2nd quadrant
@@ -69,6 +50,8 @@ for x in range(4):
     turtle.forward(720)
     turtle.right(90)
 
+ 
+
 turtle.goto(-360,240)
 for unit in row_grid:
     for value in unit:
@@ -79,25 +62,13 @@ for unit in row_grid:
         else:
             turtle.penup()
             turtle.forward(120)
-
+    current_y = turtle.ycor()
+    turtle.goto(-360,(current_y-120))
+    
 turtle.goto(-240,360)
 turtle.right(90)
 for unit in column_grid:
     for value in unit:
-        # if value in unit == [-1]:
-        #     turtle.penup()
-        #     if unit == 0:
-        #         turtle.goto(-360,240)
-        #     elif unit == 1:
-        #         turtle.goto(-360,120)
-        #     elif unit == 2:
-        #         turtle.goto(-360,0)
-        #     elif unit == 3:
-        #         turtle.goto(-360,-120)
-        #     elif unit == 4:
-        #         turtle.goto(-360,-240)
-        #     elif unit == 1:
-        #         turtle.goto(-360,-360)
         if value == True:
             turtle.pendown()
             turtle.forward(120)
@@ -105,3 +76,6 @@ for unit in column_grid:
         else:
             turtle.penup()
             turtle.forward(120)
+    current_x = turtle.xcor()
+    turtle.goto(-240,(current_x+120))
+    
