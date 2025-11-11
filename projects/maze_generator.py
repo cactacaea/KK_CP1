@@ -68,33 +68,36 @@ def drawGrids(row_grid,column_grid):
         current_x = turtle.xcor()
         turtle.goto((current_x+120),360)
 
-# check for solvable maze FUNCTION
-def solvableMaze(row_grid,column_grid):
-    visited_cells = []
-    def search(rows, columns):
-        if rows == 5 and columns == 5:
-            return True
-        visited_cells[rows][columns] = True
-
 setup()
-solvable = False
-# CALLING FUNCTIONS AND DRAWING WALLS
 
-# while loop checking for valid row/column grids
-while solvable == False:
+# # check for solvable maze FUNCTION
+# def solvableMaze(row_grid,column_grid):
+#     visited_cells = []
+#     def search(rows, columns):
+#         if rows == 5 and columns == 5:
+#             return True
+#         visited_cells[rows][columns] = True
+
+# setup()
+# solvable = False
+# # CALLING FUNCTIONS AND DRAWING WALLS
+
+# # while loop checking for valid row/column grids
+# while solvable == False:
 
 
 # if maze is solvable
     # draw walls
 
     # turtle starts in the 2nd quadrant
-    # turtle.penup()
-    # turtle.goto(-360,360)
-    # turtle.pendown()
-    # # 120 pixels for each slot in the grid, for LOOP to draw square/walls
-    # for x in range(4):
-    #     turtle.forward(720)
-    #     turtle.right(90)
+turtle.penup()
+turtle.goto(-360,360)
+turtle.pendown()
+# 120 pixels for each slot in the grid, for LOOP to draw square/walls
+for x in range(4):
+    turtle.forward(720)
+    turtle.right(90)
+drawGrids(row_grid,column_grid)
 
     # draw grid function is called w/ parameters
     # drawGrids(row_grid,column_grid)
