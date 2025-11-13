@@ -26,29 +26,16 @@ def order(dictionary,finished_bill):
     # while LOOP until the user enters a valid item from 1 of 3 menus
     while True:
         # prompt/input
-        
-        # if input isn't in drink dictionary, ask again
+        food_decision = input("What would you like to order?:\n")
+        # if input isn't in dictionary, ask again
+        if food_decision not in dictionary:
+            print("Item isn't in menu, re-order:\n")
         # else break out if it's valid
+        else:
+            finished_bill
+            break
 
     # RETURN MODIFIED BILL
-
-# introduction explaining what to type for different actions: quit, drinks, main course, sides, tax
-print("Greetings! Type:\n'Quit' to stop ordering\n'Drinks' to order a drink and see the drinks menu\n'Entrees' to order your main course and see the entree menu\n'Sides' to order 2 side dishes and see the menu")
-tax = input("\nFirst off, we must take note of tax to help the economy. What is the tax percentage where you live? Enter the plain number w/o a percent symbol\nEx: 4.55\n")
-while True:
-    choice = input("Type:\n'Quit' to stop ordering\n'Drinks' to order a drink and see the drinks menu\n'Entrees' to order your main course and see the entree menu\n'Sides' to order 2 side dishes and see the menu\nWhat would you like to do?:").lower().strip()
-    # call order function w/ each menu as a parameter depending on what the user chose
-    if choice == "quit":
-        break
-    elif choice == "drinks":
-
-        order(drinks,finished_bill)
-    elif choice == "entrees":
-        order(main_courses,finished_bill)
-    elif choice == "sides":
-        order(sides,finished_bill)
-    else:
-        print("Invalid choice, silly. Pick again.")
 
 
 # introduction explaining different actions: quit, tax, order, see each of the 3 menus
