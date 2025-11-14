@@ -39,27 +39,37 @@ sides = {
     "Rocket Shrimps": 7.25
 }
 
-# empty final bill dictionary
-finished_bill = {}
-
 # order process FUNCTION with parameters for what dictionary is being checked and the final bill
-def order(dictionary,finished_bill):
+def order(drinks, main_courses,sides):
+    # empty final bill dictionary
+    finished_bill = {}
     # while LOOP until the user enters a valid item from 1 of 3 menus
     while True:
-        # prompt/input
-        food_decision = input("\nWhat would you like to order?:\n").title().strip()
-        # if input isn't in dictionary, ask again
-        if food_decision not in dictionary:
-            print("\nItem isn't in menu, re-order.")
-        # if dictionary is drinks:
-        #     food_decision2 = input("\nWhat would you like to order for your second side dish?:\n").upper().strip()
-        # else break out if it's valid
+        # prompt/input for the drink with a conditional checking if said input is in the drinks dictionary
+        drink_choice = input("\nWhat drink would you like to order?:\n").title().strip()
+        if drink_choice not in drinks:
+            print("This item is not on the menu, re-order.")
+        else: continue
+        # prompt/input for main course with a conditional checking if said input is in the main courses dictionary
+        entree_choice = input("\nWhat would you like to order for your entree?:\n").title().strip()
+        if entree_choice not in main_courses:
+            print("This item is not on the menu, re-order.")
+        else: continue
+        # 2 prompts for sides with a nested conditional for the second side
+        side_choice1 = input("\nWhat would you like to order for your first side dish?:\n")
+        if side_choice1 not in sides:
+            print("This item is not on the menu, re-order.")
         else:
-            # add stuff to a new dictionary
-            print("\nItem added to bill!")
-            break
+            side_choice2 = input("\nWhat would you like to order for your second side dish?:\n")
+            if side_choice2 not in sides:
+                print("This item is not on the menu, re-order.")
+            else: 
+                # add stuff to a new dictionary
+                print("\nItem added to bill!")
+                break
 
     # RETURN MODIFIED BILL
+    return finished_bill
 
 
 # introduction explaining different actions: quit, tax, order, see each of the 3 menus
@@ -74,38 +84,41 @@ while True:
         break
     # if user picks to see drinks menu, make a for LOOP showing the drinks menu
     elif choice == "drinks":
-        print("\n - - - DRINKS MENU - - - ")
+        print("\n - - - DRINKS - - - ")
         for key,value in drinks.items():
             print(f"{key}: ${value:.2f}")
         time.sleep(3.5)
     # if user picks the entrees menu, print the entrees menu nicely using a for LOOP
     elif choice == "entrees":
-        print("\n - - - MAIN COURSES MENU - - - ")
+        print("\n - - - ENTREES - - - ")
         for key,value in main_courses.items():
             print(f"{key}: ${value:.2f}")
         time.sleep(3.5)
     # if user picks the sides menu, print the sides menu nicely using a for LOOP
     elif choice == "sides":
-        print("\n - - - SIDE COURSES/APPETIZERS MENU - - - ")
+        print("\n - - - SIDE COURSES/APPETIZERS - - - ")
         for key,value in sides.items():
             print(f"{key}: ${value:.2f}")
         time.sleep(3.5)
     # if user picks to order, ask which menu they would like to order from
     elif choice == "order":
-        time.sleep(2)
-        while True:
-            menu_choice = input("\n'Drinks': order a drink\n'Entrees': order a main dish\n'Sides': order 2 side dishes\nWhat menu would you like to order from?:\n").lower().strip()
-            if menu_choice == "drinks":
-                order(drinks,finished_bill)
-                break
-            elif menu_choice == "entrees":
-                order(main_courses,finished_bill)
-                break
-            elif menu_choice == "sides":
-                order(sides,finished_bill)
-                break
-            else:
-                print("\nChoose a valid option >:(")
+        final_bill_note = order(drinks,main_courses,sides)
+        print(final_bill_note)
+        # time.sleep(2)
+        # while True:
+        #     menu_choice = input("\n'Drinks': order a drink\n'Entrees': order a main dish\n'Sides': order 2 side dishes\nWhat menu would you like to order from?:\n").lower().strip()
+        #     if menu_choice == "drinks":
+        #         order(drinks,finished_bill)
+        #         break
+        #     elif menu_choice == "entrees":
+        #         order(main_courses,finished_bill)
+        #         break
+        #     elif menu_choice == "sides":
+        #         order(sides,finished_bill)
+        #         break
+        #     else:
+        #         print("\nChoose a valid option >:(")
     # else, ask again
     else:
         print("\nInvalid choice, silly. Pick again")
+        time.sleep(2)
