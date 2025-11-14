@@ -1,21 +1,42 @@
 # KK 2nd Order Up! Practice
+import time
 
-# drink dictionary with 6 keys
+# drink dictionary with 6+ keys
 drinks = {
-    ""
+    "Iced Tea": 5.05,
+    "Coffee": 5.25,
+    "Hot Cocoa": 4.40,
+    "Sparkling Water": 4.10,
+    "Coke": 4.55,
+    "Sprite": 4.55,
+    "Rockbeer": 4.55,
+    "Fanta": 4.55
 }
 
 # main course dictionary with 8 keys
 main_courses = {
-    "Plain Pasta": 4.30,
-    "Spinach Pasta": 4.49,
-    "Pizza Pasta": 4.99,
-    "Alfredo Pasta": 4.99
+    "Chow Mein": 15.75,
+    "Pho": 13.25,
+    "Shrimp Fried Rice": 12.50,
+    "Grilled Teriyaki Chicken": 15.75,
+    "California Roll": 9.00,
+    "Summer Roll": 10.00,
+    "Vegas Roll": 11.00,
+    "Spicy Yellowtail": 10.00
 }
 
 # side dishes dictionary with 10 keys
 sides = {
-    "Tater Tots": 2.00
+    "Edamame": 5.65,
+    "Spicy Edamame": 5.65,
+    "Springrolls": 8.25,
+    "Gyoza": 8.55,
+    "Miso Soup": 4.75,
+    "Egg Drop Soup": 4.75,
+    "Squid Salad": 6.95,
+    "House Salad": 5.75,
+    "White Rice": 4.00,
+    "Rocket Shrimps": 7.25
 }
 
 # empty final bill dictionary
@@ -26,49 +47,65 @@ def order(dictionary,finished_bill):
     # while LOOP until the user enters a valid item from 1 of 3 menus
     while True:
         # prompt/input
-        food_decision = input("What would you like to order?:\n")
+        food_decision = input("\nWhat would you like to order?:\n").title().strip()
         # if input isn't in dictionary, ask again
         if food_decision not in dictionary:
-            print("Item isn't in menu, re-order:\n")
+            print("\nItem isn't in menu, re-order.")
+        # if dictionary is drinks:
+        #     food_decision2 = input("\nWhat would you like to order for your second side dish?:\n").upper().strip()
         # else break out if it's valid
         else:
-            finished_bill
+            # add stuff to a new dictionary
+            print("\nItem added to bill!")
             break
 
     # RETURN MODIFIED BILL
 
 
 # introduction explaining different actions: quit, tax, order, see each of the 3 menus
-print("Welcome to Fredbear's Family Diner!")
+print("Welcome to your local sushi and noodle house!")
 # tax
-tax = input("\nTo begin, we must take note of tax to help the economy. What is the tax percentage where you live? Enter the plain number w/o a percent symbol\nEx: 4.55\n")
+tax = input("\nTo begin, we must take note of tax to help the economy. What is the tax percentage where you live? Enter the plain number w/o a percent symbol.\nEx: 4.55\n")
 # while LOOP so the user enters a valid option
 while True:
-    choice = input("Type:\n'Quit' to stop ordering\n'Order' to place your order\n'Drinks' to view the drinks menu\n'Entrees' to view the main courses menu\n'Sides' to view the side dishes menu\n\nWhat would you like to do?:\n").lower().strip()
+    choice = input("\nType:\n'Quit' to stop ordering\n'Order' to place your order\n'Drinks' to view the drinks menu\n'Entrees' to view the main courses menu\n'Sides' to view the side dishes menu\n\nWhat would you like to do?:\n").lower().strip()
     # if user picks to quit, stop the code
     if choice == "quit":
         break
     # if user picks to see drinks menu, make a for LOOP showing the drinks menu
     elif choice == "drinks":
-
+        print("\n - - - DRINKS MENU - - - ")
+        for key,value in drinks.items():
+            print(f"{key}: ${value:.2f}")
+        time.sleep(3.5)
     # if user picks the entrees menu, print the entrees menu nicely using a for LOOP
     elif choice == "entrees":
-
+        print("\n - - - MAIN COURSES MENU - - - ")
+        for key,value in main_courses.items():
+            print(f"{key}: ${value:.2f}")
+        time.sleep(3.5)
     # if user picks the sides menu, print the sides menu nicely using a for LOOP
     elif choice == "sides":
-
+        print("\n - - - SIDE COURSES/APPETIZERS MENU - - - ")
+        for key,value in sides.items():
+            print(f"{key}: ${value:.2f}")
+        time.sleep(3.5)
     # if user picks to order, ask which menu they would like to order from
     elif choice == "order":
+        time.sleep(2)
         while True:
-            menu_choice = input("'Drinks': order a drink\n'Entrees': order a main dish\n'Sides': order 2 side dishes\nWhat menu would you like to order from?:\n").lower().strip()
+            menu_choice = input("\n'Drinks': order a drink\n'Entrees': order a main dish\n'Sides': order 2 side dishes\nWhat menu would you like to order from?:\n").lower().strip()
             if menu_choice == "drinks":
                 order(drinks,finished_bill)
+                break
             elif menu_choice == "entrees":
                 order(main_courses,finished_bill)
+                break
             elif menu_choice == "sides":
                 order(sides,finished_bill)
+                break
             else:
-                print("Choose a valid option >:(")
+                print("\nChoose a valid option >:(")
     # else, ask again
     else:
-        print("Invalid choice, silly. Pick again")
+        print("\nInvalid choice, silly. Pick again")
