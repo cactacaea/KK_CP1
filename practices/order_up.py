@@ -43,31 +43,52 @@ sides = {
 def order(drinks, main_courses,sides):
     # empty final bill dictionary
     finished_bill = {}
-    # while LOOP until the user enters a valid item from 1 of 3 menus
+    # while loops until the user enters a valid item from 1 of 3 menus
+
     while True:
         # prompt/input for the drink with a conditional checking if said input is in the drinks dictionary
         drink_choice = input("\nWhat drink would you like to order?:\n").title().strip()
         if drink_choice not in drinks:
             print("This item is not on the menu, re-order.")
-        else: continue
+        else: 
+            # add item to bill and break loop
+            finished_bill[drink_choice] = drinks[drink_choice]
+            print("Your drink has been added to the bill.")
+            break
+
+    while True:
         # prompt/input for main course with a conditional checking if said input is in the main courses dictionary
         entree_choice = input("\nWhat would you like to order for your entree?:\n").title().strip()
         if entree_choice not in main_courses:
             print("This item is not on the menu, re-order.")
-        else: continue
-        # 2 prompts for sides with a nested conditional for the second side
-        side_choice1 = input("\nWhat would you like to order for your first side dish?:\n")
+        else:
+            # add item to bill and break loop
+            finished_bill[entree_choice] = main_courses[entree_choice]
+            print("Your main course has been added to the bill.")
+            break
+
+    while True:
+        # 2 prompts for sides with a nested conditional/loop for the second side
+        side_choice1 = input("\nWhat would you like to order for your first side dish?:\n").title().strip()
         if side_choice1 not in sides:
             print("This item is not on the menu, re-order.")
         else:
-            side_choice2 = input("\nWhat would you like to order for your second side dish?:\n")
-            if side_choice2 not in sides:
-                print("This item is not on the menu, re-order.")
-            else: 
-                # add stuff to a new dictionary
-                print("\nItem added to bill!")
-                break
-
+            # add first side to bill and tell user it's been added
+            finished_bill[side_choice1] = sides[side_choice1]
+            print("Your first side has been added to the bill.")
+            while True:
+                side_choice2 = input("\nWhat would you like to order for your second side dish?:\n").title().strip()
+                if side_choice2 not in sides:
+                    print("This item is not on the menu, re-order.")
+                else: 
+                    # add item to bill and break loop
+                    finished_bill[side_choice2] = sides[side_choice2]
+                    print("Your second side has been added to the bill.")
+                    break
+        break
+    time.sleep(1)
+    print("\nPlease hold as we calculate your due balance...")
+    time.sleep(3)
     # RETURN MODIFIED BILL
     return finished_bill
 
@@ -103,7 +124,12 @@ while True:
     # if user picks to order, ask which menu they would like to order from
     elif choice == "order":
         final_bill_note = order(drinks,main_courses,sides)
-        print(final_bill_note)
+        print(f"\n- - Final Order - -\n")
+        for key,value in final_bill_note.items():
+            print(f"{key}: ${value:.2f}")
+        print(f"\nTotal: ${sum(final_bill_note.values())}")
+        break
+
         # time.sleep(2)
         # while True:
         #     menu_choice = input("\n'Drinks': order a drink\n'Entrees': order a main dish\n'Sides': order 2 side dishes\nWhat menu would you like to order from?:\n").lower().strip()
