@@ -1,4 +1,4 @@
-# KK 2nd *args and **kwargs Notes
+# KK 2nd, *args and **kwargs // Notes
 
 def hello(age = 29,name = "Tia"):
     return(f"Hello {name}! You are {age}.")
