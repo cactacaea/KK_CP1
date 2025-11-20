@@ -27,7 +27,10 @@ def maximum(*values):
     for value in values:
         print(f"{value:.1f},",end=" ")
     print(" ")
-    return max(values)
+    try:
+        return max(values)
+    except ValueError:
+        print("You didn't provide any numbers.")
 
 # minimum function w/ args parameter
 def minimum(*values):
@@ -35,16 +38,22 @@ def minimum(*values):
     for value in values:
         print(f"{value:.1f},",end=" ")
     print(" ")
-    return min(values)
+    try:
+        return min(values)
+    except ValueError:
+        print("You didn't provide any numbers.")
 
 # multiplying/product function w/ args parameter
 def product(*values):
-    print(f"\nCalculating the product of:")
+    all_values = ""
     for value in values:
-        print(f"{value:.1f},",end="")
+        all_values += f"{value}, "
+    all_values = all_values[:-1]
+    print(f"\nCalculating the product of: {all_values}")
     print(" ")
     multiplied_nums = 1
     for value in values:
+        value = float(value)
         multiplied_nums *= value
     return multiplied_nums
 
@@ -87,7 +96,7 @@ while True:
     else:
         print("You entered an invalid operation. Retry!!")
 
-    print(f"Result: {result}!")
+    print(f"Result: {result:.3f}!")
 
     continue_question = input("\n(Yes/No) Would you like to complete another calculation?:\n").lower().strip()
     if continue_question == "yes":
