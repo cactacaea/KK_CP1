@@ -104,8 +104,12 @@ def lobby(state):
   ]
   for i, x in enumerate(options):
     print(f'{i}. {room_names[x]}')
-  room_no = int(input('\n?: ').strip())
-  state['current_room'] = options[room_no]
+  while True:
+    try:
+      room_no = int(input('\n?: ').strip())
+      state['current_room'] = options[room_no]
+    except ValueError and IndexError:
+      print("Invalid entry! Try again.")
 
 
 def spider_nest(state):
