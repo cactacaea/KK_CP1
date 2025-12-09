@@ -429,7 +429,7 @@ def main():
       "hp": 160,
       "dmg": 22,
   }
-  current_room = Rooms.LOBBY
+  current_room = Rooms.ABANDONED_BUNKER
 
   state = {
       'player': player,

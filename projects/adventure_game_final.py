@@ -36,7 +36,6 @@ if Time>24:
 
 
 def main():
-    current_loc = Locations.SPAWN
     bold = '\033[1m'
     end = '\033[0m'
     playername = input("Welcome to the Retreat Island! First off we need to get to know you. Enter your name or player username:\n").capitalize().strip()
@@ -82,6 +81,7 @@ def main():
         "scariness": 1,
         "inventory": []
     }
+    current_loc = Locations.SPAWN
     status = {
         "player": player,
         "boss": shadow_guardian,
@@ -125,8 +125,14 @@ def spawn(status):
         Locations.STALAGMITE_TERRAIN]
     for i, x in enumerate(options):
         print(f'{i}. {location_names[x]}')
-        loc_num = input("\n?: ").strip().lower()
-        status['current_room'] = options[loc_num]
+    
+    try:
+        loc_num = int(input("\n?: ").strip().lower())
+    except:
+        print("Invalid choice! Try again, silly.\n")
+    else:
+        return options[loc_num]
+
 
 def grasslands(status, night, Time):
     # options to go to spawn, stalagmite terrain, desert
