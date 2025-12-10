@@ -3,6 +3,8 @@
 import random
 import time
 from enum import Enum, auto
+from colorama import Fore, Back, Style
+from random import shuffle
 
 class Locations(Enum):
     SPAWN = auto()
@@ -34,7 +36,7 @@ if Time>24:
     day_counter += 1
     Time = 0
 
-
+current_loc = Locations.SPAWN
 def main():
     bold = '\033[1m'
     end = '\033[0m'
@@ -81,7 +83,7 @@ def main():
         "scariness": 1,
         "inventory": []
     }
-    current_loc = Locations.SPAWN
+    
     status = {
         "player": player,
         "boss": shadow_guardian,
@@ -133,50 +135,105 @@ def spawn(status):
     else:
         return options[loc_num]
 
-
-def grasslands(status, night, Time):
+def grasslands(status):
     # options to go to spawn, stalagmite terrain, desert
     bold = '\033[1m'
     end = '\033[0m'
     avail_actions = ["walk","search","scavenge","unscramble"]
-    print("The grasslands feature....")
-    action_choice = input(f"What would you like to do?\n - {bold}Walk{end} to another location\n - {bold}Search{end} for a scroll\n - {bold}Scavenge{end} for food and mobs\n - {bold}Unscramble{end} words to find weapons or lore\n\nEnter the bolded word for your action:\n")
+    easy_words = []
+    hard_words = []
+    print("\nThe grasslands feature....")
+    while True:
+        action_choice = input(f"\nWhat would you like to do?\n - {bold}Walk{end} to another location\n - {bold}Search{end} for a scroll\n - {bold}Scavenge{end} for food and mobs\n - {bold}Unscramble{end} words to find weapons or lore\n\nEnter the bolded word for your action:\n").strip().lower()
+        if action_choice in avail_actions:
+            break
+        else:
+            print("Invalid choice. Try again, silly.\n")
+    if action_choice == "walk":
+        a=1#let user choose loc
+    elif action_choice == "search":
+        print("Type 'exit' if you're unable to guess the word")
+        while True:
+    elif action_choice == "scavenge":
+    elif action_choice == "unscramble":
+    else:
+        print("Invalid choice. Try again, silly.")
 
-def deciduous_forest(status, night, Time):
+
+def deciduous_forest(status):
     # options to go to spawn, graveyard, desert
     bold = '\033[1m'
     end = '\033[0m'
     avail_actions = ["walk","chop","pick","search"]
-def swamp(status, night, Time):
+    print("\nThe deciduous forest features....")
+    while True:
+        action_choice = input(f"What would you like to do?\n - {bold}Walk{end} to another location\n - {bold}Search{end} for a scroll\n - {bold}Chop{end} trees for logs\n - {bold}Pick{end} mushrooms\n\nEnter the bolded word for your action:\n").strip().lower()
+        if action_choice in avail_actions:
+            break
+        else:
+            print("Invalid choice. Try again, silly.\n")
+    if action_choice == "walk":
+    elif action_choice == "chop":
+    elif action_choice == "pick":
+    elif action_choice == "search":
+    else:
+        print("Invalid choice. Try again, silly.")
+
+def swamp(status):
     # options to go to spawn, ocean, stalagmite terrain
     bold = '\033[1m'
     end = '\033[0m'
     avail_actions = ["walk","search","socialize"]
-def graveyard(status, night, Time):
+    print("\nThe swamp features....")
+    while True:
+        action_choice = input(f"What would you like to do?\n - {bold}Walk{end} to another location\n - {bold}Search{end} for a scroll\n - {bold}Socialize{end} with townspeople for resources and help\n\nEnter the bolded word for your action:\n").strip().lower()
+        if action_choice in avail_actions:
+            break
+        else:
+            print("Invalid choice. Try again, silly.\n")
+
+    if action_choice == "walk":
+    elif action_choice == "search":
+    elif action_choice == "socialize":
+    else:
+        print("Invalid choice. Try again, silly.")
+    
+def graveyard(status):
     # options to go to deciduous forest, rockylands, spawn
     bold = '\033[1m'
     end = '\033[0m'
     avail_actions = ["walk","search","dig"]
-def desert(status, night, Time):
+    print("\nThe graveyard features....")
+    while True:
+        action_choice = input(f"What would you like to do?\n - {bold}Walk{end} to another location\n - {bold}Search{end} for a scroll\n - {bold}Dig{end} graves for aid in combat or fragments of lore\n\nEnter the bolded word for your action:\n").strip().lower()
+        if action_choice in avail_actions:
+            break
+        else:
+            print("Invalid choice. Try again, silly.\n")
+
+
+def desert(status):
     # options to go to forest, spawn, grasslands
     bold = '\033[1m'
     end = '\033[0m'
     avail_actions = ["walk","search","seek"]
-def rockylands(status, night, Time):
+def rockylands(status):
     # options to go to ocean, spawn, graveyard
     bold = '\033[1m'
     end = '\033[0m'
-    avail_actions = ["walk"]
-def stalagmite_terrain(status, night, Time):
+    avail_actions = ["walk","search","build","mine"]
+def stalagmite_terrain(status):
     # options to go to swamp, grasslands, spawn
     bold = '\033[1m'
     end = '\033[0m'
-    avail_actions = ["walk"]
-def ocean(status, night, Time):
+    
+def ocean(status):
     # options to go to rockylands, swamp, spawn
     bold = '\033[1m'
     end = '\033[0m'
-    avail_actions = ["walk"]
+    mob = status['mob']
+    if mob['hp'] > 0:
+        a=1
 
 location_funcs = {
     Locations.SPAWN: spawn,
