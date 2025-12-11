@@ -47,6 +47,8 @@ def main():
     shadow_guardian = {
         "hp": 800,
         "dmg": 30,
+        "attack_dmg": random.randint(15,25),
+        "defense": 22,
         "passive_dialogue": {
             "1": "Hm.",
             "2": "Oh..",},
@@ -63,6 +65,8 @@ def main():
     abyssal_echo = {
         "hp": 260,
         "dmg": 20,
+        "attack_dmg": random.randint(15,25),
+        "defense": 22,
         "passive_dialogue": {
             "1": "Hm.",
             "2": "Oh..",},
@@ -78,7 +82,9 @@ def main():
     player = {
         "name": playername,
         "hp": 150,
-        "dmg": 22,
+        "dmg_taken": 18,
+        "attack_dmg": random.randint(15,28),
+        "defense": 20,
         "sanity": 100,
         "scariness": 1,
         "inventory": []
@@ -111,16 +117,21 @@ def main():
         if new_location in Locations:
             status['current_loc'] = new_location
 
-def playerTurn(status):
-    player = status['player']
+def playerTurn(status, enemy):
+    player_stats = status['player']
+    monster_stats = enemy
     bold = '\033[1m'
     end = '\033[0m'  
     combat_choice = input(f"It's your turn to attack! What will you choose to do?\n\n#1: {bold}Normal Attack{end} - Attack with base damage\n#2: {bold}Wild Card{end} - Deal double damage to enemy but you also take damage\n#3: {bold}Stun{end} - Single use; give yourself another turn if the stun ability is unlocked\n#4: {bold}Healing{end} - Gain 15 health if you collected healing resources\n#5: {bold}Ranged Attack{end} - Throw rocks, berries, sand bags, acorns, or mushrooms at enemy if you collected said resources, recieve another turn; low damage and 4 uses\n#6: {bold}Flee{end} - Abyssal Echo only, 50/50 chance of losing health or exiting the combat sequence.\n\nEnter your choice as a number:\n")
-    # # 1 normal attack
-    # if combat_choice == "1":
-    #     if player atk > monster def:
-    #         monster hp -= player atk
-    # # 2 wild card
+    # 1 normal attack
+    if combat_choice == "1":
+        if player_stats["attack"] > monster_stats["defense"]:
+            monster_stats["hp"] -= player_stats["attack"]
+            print(f"You dealt {player_stats["attack_dmg"]} to the {monster_stats['name']}!")
+            time.sleep(2)
+            print(f"The {monster_stats['name']}: {monster_stats["hp"]} HP")
+            print(f"{player_stats["name"]}: {player_stats["hp"]} HP")
+    # 2 wild card
     # elif combat_choice == "2":
     # # 3 stun (if unlocked)
     # elif combat_choice == "3":
@@ -130,11 +141,12 @@ def playerTurn(status):
     # elif combat_choice == "5":
     # # 6 flee
     # elif combat_choice == "6":
-    # else:
-    #     print("Invalid choice bro!")
+    else:
+        print(Fore.RED + "\nERROR /// INVALID CHOICE /// PLEASE TRY AGAIN.")
 
-
-def monsterTurn(status):
+def monsterTurn(status, enemy):
+    player_stats = status['player']
+    monster_stats = enemy
     bold = '\033[1m'
     end = '\033[0m'
 def spawn(status):
@@ -162,7 +174,6 @@ def spawn(status):
                 print(Fore.RED + "\nERROR /// INVALID CHOICE /// PLEASE TRY AGAIN.")
         except ValueError:
             print(Fore.RED + "\nERROR /// INVALID CHOICE /// PLEASE TRY AGAIN.")
-        
 
 def grasslands(status):
     # options to go to spawn, stalagmite terrain, desert
@@ -394,17 +405,34 @@ def rockylands(status):
 
 
 def stalagmiteTerrain(status):
+    shadow_guardian = status['boss']
     # options to go to swamp, grasslands, spawn
     bold = '\033[1m'
     end = '\033[0m'
     
 def ocean(status):
+    abyssal_echo = status['mob']
     # options to go to rockylands, swamp, spawn
     bold = '\033[1m'
     end = '\033[0m'
-    mob = status['mob']
-    if mob['hp'] > 0:
-        a=1
+    if abyssal_echo['hp'] > 0:
+        print("abyssal echo is alive")
+    turn = random.choice([playerTurn, monsterTurn])
+    while monster_stats["hp"] > 0:
+        if turn == playerTurn:
+            player_stats, monster_stats = playerTurn(player_stats,abyssal_echo)
+            turn = monsterTurn
+        elif turn == monsterTurn:
+            monsterTurn(player_stats,abyssal_echo)
+            turn = playerTurn
+
+        if player_stats["hp"] <= 0:
+            print(f"{player_stats['name']} was killed. The Abyssal Echo swallowed you whole.")
+            break
+
+    if monster_stats["hp"] <= 0:
+        print(f"{player_stats['name']} emerged victorious in a gruesome battle against the Abyssal Echo!")
+
 
 location_funcs = {
     Locations.SPAWN: spawn,
