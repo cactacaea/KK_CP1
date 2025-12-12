@@ -9,7 +9,7 @@ end = '\033[0m'
 username = input("What's your name?\n").capitalize().strip()
 fclass = input(f"{start}\n1: Warrior\n2: Wizard\n3: Rusher{end}\nChoose your class (enter the number):\n")
 monster_stats = {"name": "Boreal Warden",
-                 "hp": 300,
+                 "hp": 200,
                  "attack": 28,
                  "dmg": 40,
                  "defense": 24}
