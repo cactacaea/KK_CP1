@@ -124,7 +124,7 @@ def main():
     # CHANGE
     shadow_guardian = {
         "name": "Shadow Guardian",
-        "hp": 500,
+        "hp": 200,
         "dmg": 30,
         "defense": 10,
         "passive_dialogue": {
@@ -139,7 +139,7 @@ def main():
     # CHANGE
     abyssal_echo = {
         "name": "Abyssal Echo",
-        "hp": 100,
+        "hp": 165,
         "dmg": 20,
         "defense": 8,
         "passive_dialogue": {
@@ -152,7 +152,7 @@ def main():
     }}
     player = {
         "name": playername,
-        "hp": 50,
+        "hp": 130,
         "dmg_taken": 18,
         "defense": 8,
         "sanity": 100,
@@ -172,11 +172,11 @@ def main():
     display_stats = f"{bold} - - PLAYER STATISTICS - - {end}\nUser: {bold}{player['name']}\n{end}Health: {bold}{player['hp']}{end}\nAttacking Damage: {bold}15-28{end}\nDefense: {bold}{player['defense']}{end}\nSanity: {bold}{player['sanity']}{end}\nScariness: {bold}{player['scariness']}{end}"
 
     print(intro)
-    time.sleep(0)
+    time.sleep(7) #7
     print(directions)
-    time.sleep(0)
+    time.sleep(7) #7
     print(f"{display_stats}")
-    time.sleep(1)
+    time.sleep(5) #5
     while True:
         location = status["current_loc"]
         print(Fore.BLACK + f"\n{bold}Current Location: {location_names[location]}{end}")
@@ -706,7 +706,7 @@ def ocean(status):
     else:
         print("\nIt's alright, the shore doesn't seem too scary..")
         time.sleep(2)
-        print("\nYour eye catches an engraved stone near the seashells: 3,P\nUhh well alright then.")
+        print("\nYour eye catches an engraved stone near the seashells: 3P\nUhh well alright then.")
         time.sleep(3)
         while True:
             action_choice = input(f"\nWhat would you like to do?\n - {bold}Walk{end} to another location\n - {bold}Fish{end} for health and weapons\n\nEnter the bolded word for your action:\n").strip().lower()
