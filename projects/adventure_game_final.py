@@ -5,6 +5,7 @@
 
 import random
 import time
+import sys
 from enum import Enum, auto
 from colorama import Fore, Back, Style, init
 from random import shuffle
@@ -108,6 +109,7 @@ def winLose():
     while True:
         queue = input(f"\n{bold}Yes/No - Would you like to play again?:{end}\n")
         if queue == "no":
+            sys.exit
             break
         elif queue == "yes":
             print(" ")
@@ -152,7 +154,7 @@ def main():
     }}
     player = {
         "name": playername,
-        "hp": 130,
+        "hp": 120,
         "dmg_taken": 18,
         "defense": 8,
         "sanity": 100,
@@ -619,7 +621,6 @@ def rockylands(status):
     else:
         print(Fore.RED + "\nERROR /// INVALID CHOICE /// PLEASE TRY AGAIN.")
 
-
 def stalagmiteTerrain(status):
     monster_stats = status['boss']
     player_stats = status['player']
@@ -694,7 +695,7 @@ def ocean(status):
             break
         if status['current_loc'] != Locations.OCEAN:
             break
-        if status['current_enemy']['hp'] <= 0:
+        if monster_stats['hp'] <= 0:
             break
         if turn == playerTurn:
             status = playerTurn(status)
