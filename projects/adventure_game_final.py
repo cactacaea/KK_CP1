@@ -1,8 +1,5 @@
 # KK 2nd, Text Based Adventure Game Final // Project
 
-# zephyrs
-# 1234567
-
 import random
 import time
 import sys
@@ -109,7 +106,7 @@ def winLose():
     while True:
         queue = input(f"\n{bold}Yes/No - Would you like to play again?:{end}\n")
         if queue == "no":
-            sys.exit
+            sys.exit()
             break
         elif queue == "yes":
             print(" ")
@@ -122,7 +119,7 @@ def main():
     end = '\033[0m'
     playername = input("Welcome to the Retreat Island! First off we need to get to know you. Enter your name:\n").capitalize().strip()
     intro = "\nYou get knocked out by what seemed to be a human in a black mask--at least that's what you saw from the corner of your eye.\nAfter an unknown period of time passes, your eyes don't decieve you--you find yourself laying next to a red portal, sluggishly getting the ability to move your muscles and limbs.\nA fellow townsperson runs up to you in fear.\n\n'Save our island!'\n\nThe little boy runs away as your fuzzy brain gains awareness. You spot wooden posts nailed to trees with biome names; maybe they can be your guide...\n"
-    directions = f"{bold} - - DIRECTIONS - -{end}\nCollect scrolls from each biome to find the code word. Keep track of clues and line up the number to the letter.\nDon't let your sanity deplete too far.\nScariness may be useful in combat..\nUse your brain.\nPerhaps don't be stupid.\n"
+    directions = f"{bold} - - DIRECTIONS - -{end}\nCollect scrolls from each biome to find the code word. Keep track of clues and line up the number to the letter.\nDon't let your sanity deplete too far.\nScariness may be useful in combat..\nUse your brain.\nPerhaps don't be stupid.\n\n{bold} - - IMPORTANT NOTE - -{end}\nBe careful when reading details! They will help you find a CODE!\n"
     # CHANGE
     shadow_guardian = {
         "name": "Shadow Guardian",
@@ -131,11 +128,27 @@ def main():
         "defense": 10,
         "passive_dialogue": {
             "1": "Hm.",
-            "2": "Oh..",},
+            "2": "Oh..",
+            "3": "",
+            "4": "",
+            "5": "",
+            "6": "",
+        },
         "aggressive_dialogue": {
-            "1": "You're actually pathetic!",},
+            "1": "You're actually pathetic!",
+            "2": "Has no one ever taught you how to properly use a weapon or what?",
+            "3": "Wild, curious..almost disgusting creatures, you are. Can't leave the poor shadows alone",
+            "4": "",
+            "5": "",
+            "6": "",
+        },
         "scared_dialogue":{
-            "1": "I-i.."
+            "1": "Hhhhhhh...k- keep those claws away from me!",
+            "2": "",
+            "3": "",
+            "4": "",
+            "5": "",
+            "6": "",
         }
     }
     # CHANGE
@@ -154,7 +167,7 @@ def main():
     }}
     player = {
         "name": playername,
-        "hp": 120,
+        "hp": 10,
         "dmg_taken": 18,
         "defense": 8,
         "sanity": 100,
@@ -169,16 +182,17 @@ def main():
         "boss": shadow_guardian,
         "mob": abyssal_echo,
         "current_loc": current_loc,
-        "current_enemy": None
+        "current_enemy": None,
+        "weapon": None
     }
     display_stats = f"{bold} - - PLAYER STATISTICS - - {end}\nUser: {bold}{player['name']}\n{end}Health: {bold}{player['hp']}{end}\nAttacking Damage: {bold}15-28{end}\nDefense: {bold}{player['defense']}{end}\nSanity: {bold}{player['sanity']}{end}\nScariness: {bold}{player['scariness']}{end}"
 
     print(intro)
-    time.sleep(7) #7
+    time.sleep(0) #7
     print(directions)
-    time.sleep(7) #7
+    time.sleep(0) #7
     print(f"{display_stats}")
-    time.sleep(5) #5
+    time.sleep(0) #5
     while True:
         location = status["current_loc"]
         print(Fore.BLACK + f"\n{bold}Current Location: {location_names[location]}{end}")
@@ -194,15 +208,15 @@ def playerTurn(status):
     player_stats = status['player']
     monster_stats = status['current_enemy']
     avail_choices = ["1","2","3","4","5","6"]
-    stun = 0
+    stun_counter = 0
     bold = '\033[1m'
-    end = '\033[0m'  
+    end = '\033[0m'
 
     if player_stats['hp'] <= 0:
         return status
 
     while True:
-        combat_choice = input(f"\nIt's your turn to attack! What will you choose to do?\n\n#1: {bold}Normal Attack{end} - Attack with base damage\n#2: {bold}Wild Card{end} - Deal double damage to enemy but you also take damage\n#3: {bold}Stun{end} - Single use; give yourself another turn if the stun ability is unlocked\n#4: {bold}Healing{end} - Gain 15 health if you collected healing resources\n#5: {bold}Ranged Attack{end} - Throw rocks, berries, sand bags, acorns, or mushrooms at enemy if you collected said resources, recieve another turn; low damage and 4 uses\n#6: {bold}Flee{end} - Abyssal Echo only, 50/50 chance of losing health or exiting the combat sequence.\n\nEnter your choice as a number:\n")
+        combat_choice = input(f"\nIt's your turn to attack! What will you choose to do?\n\n#1: {bold}Normal Attack{end} - Attack with base damage\n#2: {bold}Wild Card{end} - Deal double damage to enemy but you also take damage\n#3: {bold}Stun{end} - Single use; normal attack damage, alonside giving yourself another turn if the stun ability is unlocked\n#4: {bold}Healing{end} - Gain 15 health if you collected healing resources\n#5: {bold}Ranged Attack{end} - Throw rocks, berries, sand bags, acorns, or mushrooms at enemy if you collected said resources, recieve another turn; low damage and 4 uses\n#6: {bold}Flee{end} - Abyssal Echo only, 50/50 chance of losing health or exiting the combat sequence.\n\nEnter your choice as a number:\n")
         if combat_choice in avail_choices:
             break
         else:
@@ -220,12 +234,18 @@ def playerTurn(status):
         double = player_dmg * 2
         calculated_dmg = max(0, double - monster_stats["defense"])
         monster_stats["hp"] -= calculated_dmg
-        player_stats["hp"] -= 10  #penalty
-        print(f"You dealt {calculated_dmg} damage to the {monster_stats['name']} but.. lost 10 HP.")
+        player_stats["hp"] -= 20  #penalty
+        print(f"You dealt {calculated_dmg} damage to the {monster_stats['name']} but.. lost 20 HP.")
         time.sleep(2)
             
-    # # 3 stun (if unlocked)
-    # elif combat_choice == "3":
+    # 3 stun (if unlocked)
+    elif combat_choice == "3":
+        if player_stats['scariness'] == 3:
+            if stun_counter < 1:
+                
+
+            
+
     # # 4 healing
     # elif combat_choice == "4":
     # # 5 ranged attack
