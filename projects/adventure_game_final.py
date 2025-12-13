@@ -167,7 +167,7 @@ def main():
     }}
     player = {
         "name": playername,
-        "hp": 10,
+        "hp": 130,
         "dmg_taken": 18,
         "defense": 8,
         "sanity": 100,
@@ -188,11 +188,11 @@ def main():
     display_stats = f"{bold} - - PLAYER STATISTICS - - {end}\nUser: {bold}{player['name']}\n{end}Health: {bold}{player['hp']}{end}\nAttacking Damage: {bold}15-28{end}\nDefense: {bold}{player['defense']}{end}\nSanity: {bold}{player['sanity']}{end}\nScariness: {bold}{player['scariness']}{end}"
 
     print(intro)
-    time.sleep(0) #7
+    time.sleep(7) #7
     print(directions)
-    time.sleep(0) #7
+    time.sleep(7) #7
     print(f"{display_stats}")
-    time.sleep(0) #5
+    time.sleep(5) #5
     while True:
         location = status["current_loc"]
         print(Fore.BLACK + f"\n{bold}Current Location: {location_names[location]}{end}")
