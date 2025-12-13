@@ -662,6 +662,7 @@ def stalagmiteTerrain(status):
             if status['current_loc'] != Locations.STALAGMITE_TERRAIN:
                 break
             if status['current_enemy']['hp'] <= 0:
+                winLose()
                 break
             if turn == playerTurn:
                 status = playerTurn(status)
