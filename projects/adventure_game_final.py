@@ -238,13 +238,10 @@ def playerTurn(status):
         print(f"You dealt {calculated_dmg} damage to the {monster_stats['name']} but.. lost 20 HP.")
         time.sleep(2)
             
-    # 3 stun (if unlocked)
-    elif combat_choice == "3":
-        if player_stats['scariness'] == 3:
-            if stun_counter < 1:
-                
-
-            
+    # # 3 stun (if unlocked)
+    # elif combat_choice == "3":
+    #     if player_stats['scariness'] == 3:
+    #         if stun_counter < 1:
 
     # # 4 healing
     # elif combat_choice == "4":
