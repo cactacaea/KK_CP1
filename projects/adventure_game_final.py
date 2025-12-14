@@ -134,12 +134,41 @@ def main():
     end = '\033[0m'
     playername = input("Welcome to the Retreat Island! First off we need to get to know you. Enter your name:\n").capitalize().strip()
     intro = "\nYou get knocked out by what seemed to be a human in a black mask--at least that's what you saw from the corner of your eye.\nAfter an unknown period of time passes, your eyes don't decieve you--you find yourself laying next to a red portal, sluggishly getting the ability to move your muscles and limbs.\nA fellow townsperson runs up to you in fear.\n\n'Save our island!'\n\nThe little boy runs away as your fuzzy brain gains awareness. You spot wooden posts nailed to trees with biome names; maybe they can be your guide...\n"
-    directions = f"{bold} - - DIRECTIONS - -{end}\nCollect scrolls from each biome to find the code word. Keep track of clues and line up the number to the letter.\nDon't let your sanity deplete too far.\nScariness may be useful in combat..\nUse your brain.\nPerhaps don't be stupid.\n\n{bold} - - IMPORTANT NOTE - -{end}\nBe careful when reading details! They will help you find a CODE!\n"
+    directions = f"{bold} - - DIRECTIONS - -{end}\nCollect scrolls from each biome to find the code word. Keep track of clues and line up the number to the letter.\nDon't let your sanity deplete too far.\nScariness may be useful in combat..\nUse your brain.\nPerhaps don't be stupid.\n\n{bold} - - IMPORTANT NOTE - -{end}\nBe careful when reading details! They will help you find the CODE!\n"
+    item_lookup = {
+        # healing items
+        "Orange Blossom": {
+            "type": "healing"},
+        "Healing Herb": {
+            "type": "healing"},
+        "Cherry Pierogi": {
+            "type": "healing"},
+        "Sweet Goop": {
+            "type": "healing"},
+        # ranged weapons
+        "Acorn": {
+            "type": "ranged"},
+        "Sand Bag": {
+            "type": "ranged"},
+        "Berry": {
+            "type": "ranged"},
+        "Rock": {
+            "type": "ranged"},
+        "Mushroom": {
+            "type": "ranged"},
+    }
+    weapon_damages = {
+        "Sharpened Stick": 5, # in grasslands
+        "Bone Shard": 10, # desert
+        "Kelp Rope": 8, # ocean
+        "Spear": 16, # crafted in rockylands
+        "Obsidian Shard": 6, # graveyard
+    }
+
     # CHANGE
     shadow_guardian = {
         "name": "Shadow Guardian",
-        "hp": 200,
-        "dmg": 30,
+        "hp": 300,
         "defense": 10,
         "passive_dialogue": {
             "1": "Hm.",
@@ -169,8 +198,7 @@ def main():
     # CHANGE
     abyssal_echo = {
         "name": "Abyssal Echo",
-        "hp": 165,
-        "dmg": 20,
+        "hp": 180,
         "defense": 8,
         "passive_dialogue": {
             "1": "Hm.",
@@ -182,12 +210,12 @@ def main():
     }}
     player = {
         "name": playername,
-        "hp": 130,
-        "dmg_taken": 18,
+        "hp": 150,
+        "attacking_damage": 20, # print ~20 + weapon
         "defense": 8,
         "sanity": 100,
-        "scariness": 3,
-        "inventory": []
+        "scariness": 1,
+        "inventory": ["Stick"]
     }
 
     current_loc = Locations.SPAWN
@@ -198,10 +226,12 @@ def main():
         "mob": abyssal_echo,
         "current_loc": current_loc,
         "current_enemy": None,
-        "weapon": None
+        "weapon": None,
+        "item_lookup": item_lookup,
+        "weapon_lookup": weapon_damages,
     }
 
-    display_stats = f"{bold} - - PLAYER STATISTICS - - {end}\nUser: {bold}{player['name']}\n{end}Health: {bold}{player['hp']}{end}\nAttacking Damage: {bold}15-28{end}\nDefense: {bold}{player['defense']}{end}\nSanity: {bold}{player['sanity']}{end}\nScariness: {bold}{player['scariness']}{end}"
+    display_stats = f"{bold} - - PLAYER STATISTICS - - {end}\nUser: {bold}{player['name']}\n{end}Health: {bold}{player['hp']}{end}\nAttacking Damage: {bold}16-26{end}\nDefense: {bold}{player['defense']}{end}\nSanity: {bold}{player['sanity']}{end}\nScariness: {bold}{player['scariness']}{end}"
 
     print(intro)
     time.sleep(1) #7
@@ -221,25 +251,27 @@ def main():
             status['current_loc'] = new_location
 
 def playerTurn(status, combat_status):
+    weapon_name = status["weapon"]
+    weapon_dmg = status["weapon_lookup"].get(weapon_name, 0)
+    item_lookup = status['item_lookup']
     player_stats = status['player']
     monster_stats = status['current_enemy']
     avail_choices = ["1","2","3","4","5","6"]
     bold = '\033[1m'
     end = '\033[0m'
-    underline = '\x1B[4m'
-    underEND = '\x1B[40'
+    inventory = status['player']['inventory']
 
     if player_stats['hp'] <= 0:
         return status
 
     while True:
-        combat_choice = input(f"\nIt's your turn to attack! What will you choose to do?\n\n#1: {bold}Normal Attack{end} - Attack with base damage\n#2: {bold}Wild Card{end} - Deal double damage to enemy but you also take damage\n#3: {bold}Stun{end} - Single use; normal attack damage, alonside giving yourself another turn {bold}if the stun ability is {end}unlocked\n#4: {bold}Healing{end} - Gain 15 health if you collected healing resources\n#5: {bold}Ranged Attack{end} - Wrist Rocket needed. Throw rocks, berries, sand bags, acorns, or mushrooms at enemy if you collected said resources, recieve another turn; low damage and 4 uses\n#6: {bold}Flee{end} - Abyssal Echo only, 50/50 chance of losing health or exiting the combat sequence.\n\nEnter your choice as a number:\n")
+        combat_choice = input(f"\nIt's your turn to attack! What will you choose to do?\n\n#1: {bold}Normal Attack{end} - Attack with base damage\n#2: {bold}Wild Card{end} - Deal double damage to enemy but you also take damage\n#3: {bold}Stun{end} - Single use; normal attack damage, alonside giving yourself another turn {bold}if the stun ability is unlocked{end}\n#4: {bold}Healing{end} - Gain 15 health if you collected healing resources\n#5: {bold}Ranged Attack{end} - Wrist Rocket needed. Throw rocks, berries, sand bags, acorns, or mushrooms at enemy if you collected said resources, recieve another turn; low damage and 4 uses\n#6: {bold}Flee{end} - Abyssal Echo only, 50/50 chance of losing health or exiting the combat sequence.\n\nEnter your choice as a number:\n")
         if combat_choice in avail_choices:
             break
         else:
             print(Fore.RED + "\nERROR /// INVALID CHOICE /// PLEASE TRY AGAIN.")
             time.sleep(2)
-    player_dmg = random.randint(16,26)
+    player_dmg = random.randint(16,26) + weapon_dmg
     # 1 normal attack
     if combat_choice == "1":
         calculated_dmg = max(0, player_dmg - monster_stats["defense"])
@@ -263,26 +295,37 @@ def playerTurn(status, combat_status):
                 monster_stats["hp"] -= calculated_dmg
                 print(f"Your inital attack is {player_dmg}...You dealt {calculated_dmg} damage after the monster's defense.\nSTUN ability used up! The enemy is stunned--you have time to land another hit on it!")
                 combat_status['stun_counter'] += 1
-                time.sleep(3)
+                time.sleep(4)
                 return "added_turn"
             else:
                 print("You already used this combat strategy in this fight! Turn skipped..")
         else:
             print("Your scariness stat is below 3! Turn skipped..")
     # # 4 healing
-    # elif combat_choice == "4":
+    elif combat_choice == "4":
+        healing_items = [item for item in inventory if item in item_lookup and item_lookup[item]["type"] == "healing"]
+        if not healing_items:
+            print("You have no healing items! Turn skipped..")
+            return "end"
+        used_item = random.choice(healing_items)
+        player_stats["hp"] = min(player_stats["hp"] + 15, 150)
+        inventory.remove(used_item)
+        print(f"You used {used_item} and gained 15 HP! (IF you weren't already at 150..)")
     # 5 ranged attack
     elif combat_choice == "5":
-        if combat_status["ranged_atk_counter"] >= 4:
-            print("You are out of ranged attacks for this combat. Turn Lost")
-        else:
-            combat_status["ranged_atk_counter"] += 1
-            dmg = random.randint(12,15)
-            monster_stats["hp"] -= dmg
-            print(f"You throw a projectile for {dmg} damage and stun your enemy!")
-            print(Fore.BLUE + f"\n{monster_stats['name']}: {monster_stats["hp"]} HP")
-            print(Fore.BLUE + f"{player_stats["name"]}: {player_stats["hp"]} HP")
-            return "added_turn"
+        ranged_items = [item for item in inventory if item in item_lookup and item_lookup[item]["type"] == "ranged"]
+        if not ranged_items:
+            print("You have no projectiles to throw.. Turn skipped.")
+            return "end"
+        used_item = random.choice(ranged_items)
+        combat_status["ranged_atk_counter"] += 1
+        dmg = random.randint(8,14)
+        monster_stats["hp"] -= dmg
+        print(f"You throw a {used_item} for {dmg} damage and stun your enemy!")
+        print(Fore.BLUE + f"\n{monster_stats['name']}: {monster_stats["hp"]} HP")
+        print(Fore.BLUE + f"{player_stats["name"]}: {player_stats["hp"]} HP")
+        return "added_turn"
+
     # 6 flee
     elif combat_choice == "6":
         if monster_stats['name'] == "Abyssal Echo":
@@ -315,7 +358,6 @@ def monsterTurn(status):
 
     if monster_stats['hp'] <= 0:
         return status
-
     else:
         monster_dmg = random.randint(18,26)
         calculated = max(0, monster_dmg - player_stats['defense'])
@@ -334,6 +376,7 @@ def spawn(status):
     avail_actions = ["walk","view"]
 
     print("\nAt your spawnpoint, the aura from the red portal makes you shiver when looking where to go next.\nErr- why does it have an eyeball attached to the top of it?.. Hahah. Hah. Hahahahahahha....?")
+    time.sleep(2)
     print(f"\n{bold}Where do you want to go?{end} (Enter the number)")
     options = [
         Locations.DECIDUOUS_FOREST, 
@@ -356,7 +399,6 @@ def spawn(status):
         except ValueError:
             print(Fore.RED + "\nERROR /// INVALID CHOICE /// PLEASE TRY AGAIN.")
     
-
 def grasslands(status):
     player_stats = status['player']
     # options to go to spawn, stalagmite terrain, desert
@@ -456,13 +498,16 @@ def deciduousForest(status):
         print(Fore.RED + "\nERROR /// INVALID CHOICE /// PLEASE TRY AGAIN.")
 
 def swamp(status):
+    weapon_name = status["weapon"]
+    weapon_dmg = status["weapon_lookup"].get(weapon_name, 0)
+    attacking_dmg = 20 + weapon_dmg
     player = status['player']
     # options to go to spawn, ocean, stalagmite terrain
     bold = '\033[1m'
     end = '\033[0m'
     avail_actions = ["walk","search","socialize","view"]
-    print("\nMucky dirt puddles reek of animal manure. A mosquito lands on you--followed by a few more flies as you swat them. Lit up houses are spotted from afar\nGrass and weeds build up on your legs every time you take a step.")
-    time.sleep(5)
+    print("\nMucky dirt puddles reek of animal manure. A mosquito lands on you--followed by a few more flies as you swat them. Lit up houses are spotted from afar.\nGrass and weeds build up on your legs every time you take a step.")
+    time.sleep(9)
     while True:
         action_choice = input(f"\nWhat would you like to do?\n - {bold}Walk{end} to another location\n - {bold}Search{end} for a scroll\n - {bold}Socialize{end} with townspeople for resources and help\n - {bold}View{end} your inventory and statistics\n\nEnter the bolded word for your action:\n").strip().lower()
         if action_choice in avail_actions:
@@ -487,15 +532,15 @@ def swamp(status):
             except ValueError:
                 print(Fore.RED + "\nERROR /// INVALID CHOICE /// PLEASE TRY AGAIN.")
     elif action_choice == "search":
-        print("\nA fellow villager, though dirty in mud and raspberry jam--which looks incredibly appetizing--hands you a recipe book for future reference\nThat is, if you make it out of this place alive. One page mentions 'R6' for.. no reason? Or maybe uhm..who knows..")
-        time.sleep(5)
+        print(f"\nA fellow villager, though dirty in mud and raspberry jam--which looks incredibly appetizing--hands you a recipe book for future reference\nThat is, if you make it out of this place alive. One page mentions {bold}{Fore.BLACK}'R6'{end}{Fore.RESET} for.. no reason? Or maybe uhm..who knows..")
+        time.sleep(7)
     elif action_choice == "socialize":
         print("placeholder")
     elif action_choice == "view":
         print("\nYou find a swirly rock amidst an ant hill. It's a pretty rock, really--though trying to extract it from the muck, all your items fly out from your pockets\nEverything floats in front of you to observe.\n")
-        time.sleep(2.5)
-        print(f"{bold} - - - PLAYER STATISTICS - - - {end}\nUser: {bold}{player['name']}\n{end}Health: {bold}{player['hp']}{end}\nAttacking Damage: {bold}15-28{end}\nDefense: {bold}{player['defense']}{end}\nSanity: {bold}{player['sanity']}{end}\nScariness: {bold}{player['scariness']}{end}")
-        print(f"\n{bold}EQUIPPED WEAPON: {end} {status['weapon']}\n")
+        time.sleep(4)
+        print(f"{bold} - - - PLAYER STATISTICS - - - {end}\nUser: {bold}{player['name']}\n{end}Health: {bold}{player['hp']}{end}\nAttacking Damage: {bold}~{attacking_dmg}{end}\nDefense: {bold}{player['defense']}{end}\nSanity: {bold}{player['sanity']}{end}\nScariness: {bold}{player['scariness']}{end}")
+        print(f"\n{bold}EQUIPPED WEAPON:{end} {status['weapon']}\n")
         time.sleep(4)
         print(f"{bold} - - - Inventory - - - {end}")
         item_counts = {}
@@ -505,7 +550,7 @@ def swamp(status):
             print(f"{count}x {item}")
         time.sleep(3)
         print("\nExiting to the main menu in a moment..")
-        time.sleep(6)
+        time.sleep(8)
     else:
         print(Fore.RED + "\nERROR /// INVALID CHOICE /// PLEASE TRY AGAIN.")
     
@@ -612,25 +657,22 @@ def desert(status):
             if guess == "exit":
                 break
             if guess == answer:
-                print("\nAfter painful thinking and sitting in the sand until the day got cold, you find a note?")
-                print(f"_``~-~~-{bold}4H{end}")
+                print(f"\nAfter painful thinking and sitting in the sand until the day got cold, you\nfinally swipe away some sand and find the letter you needed..{bold}{Fore.YELLOW}4H{end}{Fore.RESET}")
                 time.sleep(5)
                 break
             else:
                 print("Yikes, you lost 5 health stubbing your toe. Be more focused on writing next time")
                 player_stats['hp'] -= 5
+                time.sleep(2)
                 break
-    elif action_choice == "build":
-        print("placeholder")
-    elif action_choice == "mine":
-        print("placeholder")
-    elif action_choice == "dig":
+    elif action_choice == "seek":
         print("placeholder")
     else:
         print(Fore.RED + "\nERROR /// INVALID CHOICE /// PLEASE TRY AGAIN.")
 
 def rockylands(status):
     player_stats = status['player']
+    inventory = player_stats['inventory']
     # options to go to ocean, spawn, graveyard
     bold = '\033[1m'
     end = '\033[0m'
@@ -681,9 +723,71 @@ def rockylands(status):
                 player_stats['hp'] -= 5
                 break
     elif action_choice == "build":
-        print("placeholder")
+        print("\nSpotting a wooden block from afar, on approach you notice that it has a 3x3 grid. A fascinating, magic crafter!\nUpon touching it, several objects are yoinked from your hands and pockets\nYou need 2 rocks and a stick to make a spear. Might be useful in combat if you have the resources")
+        time.sleep(6)
+        while True:
+            choice = input("\nYes/No - Do you wish to proceed in crafting?:\n").strip().lower()
+            if choice == "no":
+                print("\nYou chose to stray from giving the crafter your precious items.")
+                break
+            elif choice == "yes":
+                print("\nChecking for necessary items...")
+                time.sleep(2)
+                rocks = inventory.count("Rock")
+                sticks = inventory.count("Stick")
+                if rocks >= 2 and sticks >= 1:
+                    inventory.remove("Rock")
+                    inventory.remove("Rock")
+                    inventory.remove("Stick")
+                    print("\nYou have the resources required! The crafter wobbles as a spear comes together.")
+                    if status['weapon'] is not None:
+                        replace = input(f"\nYes/No - You're currently wielding a {status['weapon']}. Would you like to replace it?:\n").lower().strip()
+                        if replace == "yes":
+                            player_stats["weapon"] = "Spear"
+                            print("\nSpear equipped.")
+                        else:
+                            print("\nYou decide to keep your weapon. The spear vanishes into thin air. Odd, but alrighty then.")
+                    else:
+                        status['weapon'] = "Spear"
+                        print("\nSince your pockets are empty of weapons, you grab the spear to your advantage.\nYou grant +16 base attacking damage")
+                        time.sleep(4)
+                else:
+                    print("\nYou don't have enough materials, silly. The crafter rejects your peace offering. Well, not really a peace offering but--\nanyway. Whilst leaving, you stub your toe. Youch! -1 Health.")
+                    player_stats['hp'] -= 1
+                    time.sleep(3.5)
+                break
+            else:
+                print(Fore.RED + "\nERROR /// INVALID CHOICE /// PLEASE TRY AGAIN.")
     elif action_choice == "mine":
-        print("placeholder")
+        while True:
+            print("\nYou pick up the pickaxe laying amongst the boulders. Swing in the correct direction using WASD.")
+            times = random.randint(7,10)
+            directions = {
+                "up": "w",
+                "down": "s",
+                "left": "a",
+                "right": "d"}
+            for i in range(times):
+                direction = random.choice(list(directions.keys()))
+                correct_key = directions[direction]
+                print(f"\nStrike {direction.upper()}!")
+                key_choice = input().lower().strip()
+                if key_choice == correct_key:
+                    print(f"\n{bold}*CRACK*{end}")
+                else:
+                    print("Your foot slipped! You struggle getting up for a bit...")
+                    time.sleep(3)
+            print("\nThe boulder cracks apart! You pick up a decent rock and gain 0.2 scariness.")
+            time.sleep(1.5)
+            inventory.append("Rock")
+            player_stats['scariness'] += min(player_stats['scariness'] + .2,3)
+            again = input("\nYes/No - Mine again?:").lower().strip()
+            if again == "yes":
+                print("\nYou walk over to another rock.")
+            elif again == "no":
+                break
+            else:
+                print(Fore.RED + "\nERROR /// INVALID CHOICE /// PLEASE TRY AGAIN.")
     else:
         print(Fore.RED + "\nERROR /// INVALID CHOICE /// PLEASE TRY AGAIN.")
 
@@ -702,7 +806,7 @@ def stalagmiteTerrain(status):
     time.sleep(6)
     code = input(Fore.MAGENTA + f"\nEnter the 7-letter code:\n" + Fore.RESET).lower().strip()
     if code == "zephyrs":
-        print(f"\nSlowly but surely you reach the deepest section of the cave picking up trinkets and a torch along the pathway; stalagmites connecting with stalagtites, broken shards of glass and rock\nsurround cracked pillars of dark, mossy stone. At last, an enormous shadow dims the flame of your torch; {bold}{Fore.GREEN}The Shadow Guardian{end}{Fore.RESET}.. This is the only way to save the island residents. Prevent their poor souls from being taken over by fury.")
+        print(f"\nSlowly but surely you reach the deepest section of the cave picking up trinkets and a torch along the pathway; stalagmites connecting with stalagtites, broken shards of glass and rock\nsurround cracked pillars of dark, mossy stone. At last, an enormous shadow dims the flame of your torch; {bold}{Fore.MAGENTA}The Shadow Guardian{end}{Fore.RESET}.. This is the only way to save the island residents. Prevent their poor souls from being taken over by fury.")
         time.sleep(9)
         turn = random.choice([playerTurn, monsterTurn])
         while monster_stats["hp"] > 0:
@@ -760,7 +864,7 @@ def ocean(status):
     time.sleep(4)
     if monster_stats['hp'] > 0:
         print(f"AHHHH! That THING in the water was NOT harmless!! {bold}{Fore.GREEN}The Abyssal Echo{end}{Fore.RESET} slithers under your feet and flings you into the air. You barely land back into the water whole.")
-        time.sleep(4)
+        time.sleep(5)
     turn = random.choice([playerTurn, monsterTurn])
     while monster_stats["hp"] > 0:
         if player_stats["hp"] <= 0:
@@ -780,7 +884,6 @@ def ocean(status):
         else:
             monsterTurn(status)
             turn = "player"
-    
     else:
         print("\nIt's alright, the shore doesn't seem too scary..")
         time.sleep(2)
