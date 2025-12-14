@@ -38,8 +38,7 @@ if Time>24:
     day_counter += 1
     Time = 0
 
-# easy math eqs for scroll
-
+# scroll questions  
 easymath1 = "Evaluate; 2^3 + 12 / 3 = ?"
 easymath2 = "Simplify; 3(2x+5) - 4x"
 easymath3 = "What's 3/4 of 20?"
@@ -99,6 +98,22 @@ grasslands_unscrambling = [
     (unscramble2, "future"),
     (unscramble3, "board"),
 ]
+
+# different biome dialogue
+
+# grasslands
+
+# dec forest
+
+# swamp
+
+# graveyard
+
+# desert
+
+# rockylands
+
+# ocean
 
 def winLose():
     bold = '\033[1m'
@@ -171,10 +186,10 @@ def main():
         "dmg_taken": 18,
         "defense": 8,
         "sanity": 100,
-        "scariness": 1,
+        "scariness": 3,
         "inventory": []
     }
-    
+
     current_loc = Locations.SPAWN
 
     status = {
@@ -185,14 +200,15 @@ def main():
         "current_enemy": None,
         "weapon": None
     }
+
     display_stats = f"{bold} - - PLAYER STATISTICS - - {end}\nUser: {bold}{player['name']}\n{end}Health: {bold}{player['hp']}{end}\nAttacking Damage: {bold}15-28{end}\nDefense: {bold}{player['defense']}{end}\nSanity: {bold}{player['sanity']}{end}\nScariness: {bold}{player['scariness']}{end}"
 
     print(intro)
-    time.sleep(7) #7
+    time.sleep(1) #7
     print(directions)
-    time.sleep(7) #7
+    time.sleep(1) #7
     print(f"{display_stats}")
-    time.sleep(5) #5
+    time.sleep(1) #5
     while True:
         location = status["current_loc"]
         print(Fore.BLACK + f"\n{bold}Current Location: {location_names[location]}{end}")
@@ -204,19 +220,20 @@ def main():
         if new_location in Locations:
             status['current_loc'] = new_location
 
-def playerTurn(status):
+def playerTurn(status, combat_status):
     player_stats = status['player']
     monster_stats = status['current_enemy']
     avail_choices = ["1","2","3","4","5","6"]
-    stun_counter = 0
     bold = '\033[1m'
     end = '\033[0m'
+    underline = '\x1B[4m'
+    underEND = '\x1B[40'
 
     if player_stats['hp'] <= 0:
         return status
 
     while True:
-        combat_choice = input(f"\nIt's your turn to attack! What will you choose to do?\n\n#1: {bold}Normal Attack{end} - Attack with base damage\n#2: {bold}Wild Card{end} - Deal double damage to enemy but you also take damage\n#3: {bold}Stun{end} - Single use; normal attack damage, alonside giving yourself another turn if the stun ability is unlocked\n#4: {bold}Healing{end} - Gain 15 health if you collected healing resources\n#5: {bold}Ranged Attack{end} - Throw rocks, berries, sand bags, acorns, or mushrooms at enemy if you collected said resources, recieve another turn; low damage and 4 uses\n#6: {bold}Flee{end} - Abyssal Echo only, 50/50 chance of losing health or exiting the combat sequence.\n\nEnter your choice as a number:\n")
+        combat_choice = input(f"\nIt's your turn to attack! What will you choose to do?\n\n#1: {bold}Normal Attack{end} - Attack with base damage\n#2: {bold}Wild Card{end} - Deal double damage to enemy but you also take damage\n#3: {bold}Stun{end} - Single use; normal attack damage, alonside giving yourself another turn {bold}if the stun ability is {end}unlocked\n#4: {bold}Healing{end} - Gain 15 health if you collected healing resources\n#5: {bold}Ranged Attack{end} - Wrist Rocket needed. Throw rocks, berries, sand bags, acorns, or mushrooms at enemy if you collected said resources, recieve another turn; low damage and 4 uses\n#6: {bold}Flee{end} - Abyssal Echo only, 50/50 chance of losing health or exiting the combat sequence.\n\nEnter your choice as a number:\n")
         if combat_choice in avail_choices:
             break
         else:
@@ -238,22 +255,41 @@ def playerTurn(status):
         print(f"You dealt {calculated_dmg} damage to the {monster_stats['name']} but.. lost 20 HP.")
         time.sleep(2)
             
-    # # 3 stun (if unlocked)
-    # elif combat_choice == "3":
-    #     if player_stats['scariness'] == 3:
-    #         if stun_counter < 1:
-
+    # 3 stun (if unlocked)
+    elif combat_choice == "3":
+        if player_stats['scariness'] == 3:
+            if combat_status['stun_counter'] < 1:
+                calculated_dmg = max(0, player_dmg - monster_stats["defense"])
+                monster_stats["hp"] -= calculated_dmg
+                print(f"Your inital attack is {player_dmg}...You dealt {calculated_dmg} damage after the monster's defense.\nSTUN ability used up! The enemy is stunned--you have time to land another hit on it!")
+                combat_status['stun_counter'] += 1
+                time.sleep(3)
+                return "added_turn"
+            else:
+                print("You already used this combat strategy in this fight! Turn skipped..")
+        else:
+            print("Your scariness stat is below 3! Turn skipped..")
     # # 4 healing
     # elif combat_choice == "4":
-    # # 5 ranged attack
-    # elif combat_choice == "5":
+    # 5 ranged attack
+    elif combat_choice == "5":
+        if combat_status["ranged_atk_counter"] >= 4:
+            print("You are out of ranged attacks for this combat. Turn Lost")
+        else:
+            combat_status["ranged_atk_counter"] += 1
+            dmg = random.randint(12,15)
+            monster_stats["hp"] -= dmg
+            print(f"You throw a projectile for {dmg} damage and stun your enemy!")
+            print(Fore.BLUE + f"\n{monster_stats['name']}: {monster_stats["hp"]} HP")
+            print(Fore.BLUE + f"{player_stats["name"]}: {player_stats["hp"]} HP")
+            return "added_turn"
     # 6 flee
     elif combat_choice == "6":
-        if monster_stats["name"] == "Abyssal Echo":
+        if monster_stats['name'] == "Abyssal Echo":
             running_decider = ["run","die"]
             chosen = random.choice(running_decider)
             if chosen == "run":
-                print("You successfully escaped to the mysterious red portal at spawn--for now.")
+                print("You successfully escaped to the mysterious red portal at spawn--for now. The Abyssal Echo awaits your return.")
                 time.sleep(3)
                 status['current_loc'] = Locations.SPAWN
                 status['current_enemy'] = None
@@ -262,14 +298,14 @@ def playerTurn(status):
                 print("The Abyssal Echo yanks your legs down with its tail..you fail to flee and break your toe; -12 damage")
                 player_stats["hp"] -= 12
         else:
-            print("It's too late to run, my friend.")
+            print("It's too late to run, my friend. Turn lost..")
     else:
         print(Fore.RED + "\nERROR /// INVALID CHOICE /// TURN LOST.")
 
     print(Fore.BLUE + f"\n{monster_stats['name']}: {monster_stats["hp"]} HP")
     print(Fore.BLUE + f"{player_stats["name"]}: {player_stats["hp"]} HP")
     time.sleep(3)
-    return status
+    return "end"
 
 def monsterTurn(status):
     player_stats = status['player']
@@ -292,9 +328,12 @@ def monsterTurn(status):
     return status
   
 def spawn(status):
+    player = status['player']
     bold = '\033[1m'
     end = '\033[0m'
+    avail_actions = ["walk","view"]
 
+    print("\nAt your spawnpoint, the aura from the red portal makes you shiver when looking where to go next.\nErr- why does it have an eyeball attached to the top of it?.. Hahah. Hah. Hahahahahahha....?")
     print(f"\n{bold}Where do you want to go?{end} (Enter the number)")
     options = [
         Locations.DECIDUOUS_FOREST, 
@@ -316,6 +355,7 @@ def spawn(status):
                 print(Fore.RED + "\nERROR /// INVALID CHOICE /// PLEASE TRY AGAIN.")
         except ValueError:
             print(Fore.RED + "\nERROR /// INVALID CHOICE /// PLEASE TRY AGAIN.")
+    
 
 def grasslands(status):
     player_stats = status['player']
@@ -323,8 +363,6 @@ def grasslands(status):
     bold = '\033[1m'
     end = '\033[0m'
     avail_actions = ["walk","search","scavenge","unscramble"]
-    easy_words = []
-    hard_words = []
     print("\nThe grasslands are bare, but..who doesn't like soft, bright green grass? You spot friendly rabbits who run away as you inch closer to them.")
     time.sleep(5)
     while True:
@@ -367,13 +405,9 @@ def grasslands(status):
                 time.sleep(5)
                 break
             else:
-                print("You were caught doing 'magic.' Just because of easy math. Better luck next time--be sneaky alright??")
+                print("You were caught doing 'magic.' Just because of easy math. Better luck next time--be sneaky alright??\n-5 Health")
                 player_stats['hp'] -= 5
                 break
-    elif action_choice == "build":
-        print("placeholder")
-    elif action_choice == "mine":
-        print("placeholder")
     elif action_choice == "scavenge":
         print("placeholder")
     elif action_choice == "unscramble":
@@ -422,19 +456,19 @@ def deciduousForest(status):
         print(Fore.RED + "\nERROR /// INVALID CHOICE /// PLEASE TRY AGAIN.")
 
 def swamp(status):
+    player = status['player']
     # options to go to spawn, ocean, stalagmite terrain
     bold = '\033[1m'
     end = '\033[0m'
-    avail_actions = ["walk","search","socialize"]
+    avail_actions = ["walk","search","socialize","view"]
     print("\nMucky dirt puddles reek of animal manure. A mosquito lands on you--followed by a few more flies as you swat them. Lit up houses are spotted from afar\nGrass and weeds build up on your legs every time you take a step.")
     time.sleep(5)
     while True:
-        action_choice = input(f"\nWhat would you like to do?\n - {bold}Walk{end} to another location\n - {bold}Search{end} for a scroll\n - {bold}Socialize{end} with townspeople for resources and help\n\nEnter the bolded word for your action:\n").strip().lower()
+        action_choice = input(f"\nWhat would you like to do?\n - {bold}Walk{end} to another location\n - {bold}Search{end} for a scroll\n - {bold}Socialize{end} with townspeople for resources and help\n - {bold}View{end} your inventory and statistics\n\nEnter the bolded word for your action:\n").strip().lower()
         if action_choice in avail_actions:
             break
         else:
             print(Fore.RED + "\nERROR /// INVALID CHOICE /// PLEASE TRY AGAIN.")
-
     if action_choice == "walk":
         print(f"\n{bold}Where do you want to go?{end} (Enter the number)")
         options = [
@@ -454,8 +488,24 @@ def swamp(status):
                 print(Fore.RED + "\nERROR /// INVALID CHOICE /// PLEASE TRY AGAIN.")
     elif action_choice == "search":
         print("\nA fellow villager, though dirty in mud and raspberry jam--which looks incredibly appetizing--hands you a recipe book for future reference\nThat is, if you make it out of this place alive. One page mentions 'R6' for.. no reason? Or maybe uhm..who knows..")
+        time.sleep(5)
     elif action_choice == "socialize":
         print("placeholder")
+    elif action_choice == "view":
+        print("\nYou find a swirly rock amidst an ant hill. It's a pretty rock, really--though trying to extract it from the muck, all your items fly out from your pockets\nEverything floats in front of you to observe.\n")
+        time.sleep(2.5)
+        print(f"{bold} - - - PLAYER STATISTICS - - - {end}\nUser: {bold}{player['name']}\n{end}Health: {bold}{player['hp']}{end}\nAttacking Damage: {bold}15-28{end}\nDefense: {bold}{player['defense']}{end}\nSanity: {bold}{player['sanity']}{end}\nScariness: {bold}{player['scariness']}{end}")
+        print(f"\n{bold}EQUIPPED WEAPON: {end} {status['weapon']}\n")
+        time.sleep(4)
+        print(f"{bold} - - - Inventory - - - {end}")
+        item_counts = {}
+        for item in player["inventory"]:
+            item_counts[item] = item_counts.get(item, 0) + 1
+        for item, count in item_counts.items():
+            print(f"{count}x {item}")
+        time.sleep(3)
+        print("\nExiting to the main menu in a moment..")
+        time.sleep(6)
     else:
         print(Fore.RED + "\nERROR /// INVALID CHOICE /// PLEASE TRY AGAIN.")
     
@@ -579,7 +629,6 @@ def desert(status):
     else:
         print(Fore.RED + "\nERROR /// INVALID CHOICE /// PLEASE TRY AGAIN.")
 
-
 def rockylands(status):
     player_stats = status['player']
     # options to go to ocean, spawn, graveyard
@@ -642,6 +691,10 @@ def stalagmiteTerrain(status):
     monster_stats = status['boss']
     player_stats = status['player']
     status['current_enemy'] = status['boss']
+    combat_status = {
+        "stun_counter": 0,
+        "ranged_atk_counter": 0
+    }
     # options to go to swamp, grasslands, spawn
     bold = '\033[1m'
     end = '\033[0m'
@@ -649,8 +702,8 @@ def stalagmiteTerrain(status):
     time.sleep(6)
     code = input(Fore.MAGENTA + f"\nEnter the 7-letter code:\n" + Fore.RESET).lower().strip()
     if code == "zephyrs":
-        print("\nSlowly but surely you reach the deepest section of the cave picking up trinkets and a torch along the pathway; stalagmites connecting with stalagtites, broken shards of glass and rock\n surround cracked pillars of dark, mossy stone. At last, an enormous shadow dims the flame of your torch. This is the only way to save the island residents. Prevent their poor souls from being taken over by fury.")
-        time.sleep(6)
+        print(f"\nSlowly but surely you reach the deepest section of the cave picking up trinkets and a torch along the pathway; stalagmites connecting with stalagtites, broken shards of glass and rock\nsurround cracked pillars of dark, mossy stone. At last, an enormous shadow dims the flame of your torch; {bold}{Fore.GREEN}The Shadow Guardian{end}{Fore.RESET}.. This is the only way to save the island residents. Prevent their poor souls from being taken over by fury.")
+        time.sleep(9)
         turn = random.choice([playerTurn, monsterTurn])
         while monster_stats["hp"] > 0:
             if player_stats["hp"] <= 0:
@@ -664,12 +717,13 @@ def stalagmiteTerrain(status):
             if status['current_enemy']['hp'] <= 0:
                 winLose()
                 break
-            if turn == playerTurn:
-                status = playerTurn(status)
-                turn = monsterTurn
-            elif turn == monsterTurn:
-                status = monsterTurn(status)
-                turn = playerTurn
+            if turn == "player":
+                calc = playerTurn(status, combat_status)
+                if calc != "added_turn":
+                    turn = "monster"
+            else:
+                monsterTurn(status)
+                turn = "player"
     else:
         print(Fore.RED + "\nERROR /// WRONG CODE /// RUN. GET OUT. RUN. COME BACK WITH THE CORRECT CODE. DID YOU FOLLOW THE INSTRUCTIONS?")
         time.sleep(5)
@@ -694,6 +748,10 @@ def ocean(status):
     monster_stats = status['mob']
     player_stats = status['player']
     status['current_enemy'] = status['mob']
+    combat_status = {
+        "stun_counter": 0,
+        "ranged_atk_counter": 0
+    }
     # options to go to rockylands, swamp, spawn
     avail_actions = ["walk","fish"]
     bold = '\033[1m'
@@ -715,12 +773,13 @@ def ocean(status):
             break
         if monster_stats['hp'] <= 0:
             break
-        if turn == playerTurn:
-            status = playerTurn(status)
-            turn = monsterTurn
-        elif turn == monsterTurn:
+        if turn == "player":
+            calc = playerTurn(status, combat_status)
+            if calc != "added_turn":
+                turn = "monster"
+        else:
             monsterTurn(status)
-            turn = playerTurn
+            turn = "player"
     
     else:
         print("\nIt's alright, the shore doesn't seem too scary..")
@@ -761,7 +820,6 @@ def ocean(status):
 
     # if monster_stats["hp"] <= 0:
     #     print(f"{player_stats['name']} emerged victorious in a gruesome battle against the Abyssal Echo!")
-
 
 location_funcs = {
     Locations.SPAWN: spawn,
