@@ -265,11 +265,11 @@ def main():
     display_stats = f"{bold} - - PLAYER STATISTICS - - {end}\nUser: {bold}{player['name']}\n{end}Health: {bold}{player['hp']}{end}\nAttacking Damage: {bold}16-26{end}\nDefense: {bold}{player['defense']}{end}\nSanity: {bold}{player['sanity']}{end}\nScariness: {bold}{player['scariness']}{end}"
 
     print(intro)
-    time.sleep(1) #7
+    time.sleep(9) #7
     print(directions)
-    time.sleep(1) #7
+    time.sleep(9) #7
     print(f"{display_stats}")
-    time.sleep(1) #5
+    time.sleep(6) #5
     while True:
         location = status["current_loc"]
         print(Fore.BLACK + f"\n{bold}Current Location: {location_names[location]}{end}")
@@ -441,7 +441,7 @@ def grasslands(status):
     end = '\033[0m'
     avail_actions = ["walk","search"]
     print("\nThe grasslands are bare, but..who doesn't like soft, bright green grass? You spot friendly rabbits who run away as you inch closer to them.")
-    time.sleep(5)
+    time.sleep(3.5)
     while True:
         action_choice = input(f"\nWhat would you like to do?\n - {bold}Walk{end} to another location\n - {bold}Search{end} for a scroll\n\nEnter the bolded word for your action:\n").strip().lower()
         if action_choice in avail_actions:
@@ -496,7 +496,7 @@ def deciduousForest(status):
     end = '\033[0m'
     avail_actions = ["walk","chop","pick","search"]
     print("\nThe deciduous forest features bright orange trees and dried mud. What a lovely place for trees.")
-    time.sleep(4)
+    time.sleep(3.5)
     while True:
         action_choice = input(f"\nWhat would you like to do?\n - {bold}Walk{end} to another location\n - {bold}Search{end} for a scroll\n - {bold}Chop{end} trees for logs\n - {bold}Pick{end} mushrooms\n\nEnter the bolded word for your action:\n").strip().lower()
         if action_choice in avail_actions:
@@ -604,7 +604,7 @@ def swamp(status):
     end = '\033[0m'
     avail_actions = ["walk","search","socialize","view"]
     print("\nMucky dirt puddles reek of animal manure. A mosquito lands on you--followed by a few more flies as you swat them. Lit up houses are spotted from afar.\nGrass and weeds build up on your legs every time you take a step.")
-    time.sleep(6)
+    time.sleep(4)
     while True:
         action_choice = input(f"\nWhat would you like to do?\n - {bold}Walk{end} to another location\n - {bold}Search{end} for a scroll\n - {bold}Socialize{end} with townspeople for resources and help\n - {bold}View{end} your inventory and statistics\n\nEnter the bolded word for your action:\n").strip().lower()
         if action_choice in avail_actions:
@@ -724,7 +724,7 @@ def graveyard(status):
         "5": "Why's there just a big 'W' etched in it"
     }
     print("\nYou feel the presence of spirits as you walk by each grave. The graveyard feels uncomfortable and bare.\nAlthough, perhaps it's more interesting at a second glance. We don't judge books by their covers here.")
-    time.sleep(5)
+    time.sleep(4)
     while True:
         action_choice = input(f"\nWhat would you like to do?\n - {bold}Walk{end} to another location\n - {bold}Search{end} for a scroll\n - {bold}Dig{end} graves for aid in combat or fragments of lore\n\nEnter the bolded word for your action:\n").strip().lower()
         if action_choice in avail_actions:
@@ -849,7 +849,7 @@ def desert(status):
     end = '\033[0m'
     avail_actions = ["walk","search","seek","dig","forge"]
     print("\nTemples, wells, and mounds of sand make up a scorching desert. Cacti and sticks in the ground seem useless.\nYour bare feet warm up as you explore the dry land.")
-    time.sleep(5)
+    time.sleep(4)
     while True:
         action_choice = input(f"\nWhat would you like to do?\n - {bold}Walk{end} to another location\n - {bold}Search{end} for a scroll\n - {bold}Seek{end} for weapons and lore fragments in the sand\n - {bold}Dig{end} for semi unbroken and useful sticks\n - {bold}Forge{end} collected sticks\n\nEnter the bolded word for your action:\n").strip().lower()
         if action_choice in avail_actions:
@@ -1036,7 +1036,7 @@ def rockylands(status):
     end = '\033[0m'
     avail_actions = ["walk","search","build","mine"]
     print("\nMountains of boulders, gems, and small rocks make up the lovely rockylands.")
-    time.sleep(5)
+    time.sleep(3.5)
     while True:
         action_choice = input(f"\nWhat would you like to do?\n - {bold}Walk{end} to another location\n - {bold}Search{end} for a scroll\n - {bold}Build{end} weapons from resources\n - {bold}Mine{end} boulders for rocks\n\nEnter the bolded word for your action:\n").strip().lower()
         if action_choice in avail_actions:
