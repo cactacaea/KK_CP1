@@ -25,9 +25,15 @@ for x in range(2,11,2):
     time.sleep(1)
 time.sleep(3)
 
+print("Counting by 3s:")
+for x in range(3,13,3):
+    print(x)
+    time.sleep(1)
+time.sleep(3)
+
 print("Counting down:")
 for x in range(10,0,-1):
     print(x)
     time.sleep(1)
 time.sleep(1)
-print("Finished Running.")
+print("HAPPY NEW YEAR!")
